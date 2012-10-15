@@ -8,11 +8,26 @@
 <!-- Underscore.js Templates -->
 
 <script type="text/template" id="tpl-search-area">
+	<div id="first-page" class="well">
+	
+		<form>
 
-  <button class="btn btn-large btn-primary" id="search-trip" type="button">Sök</button>
-  <div class="datepicker" id="datepicker-arrival"></div>
-  <div class="datepicker" id="datepicker-departure"></div>
+		  <label>Från:</label>
+		  <input type="text" placeholder="Type something…">
+		  
+		   <label>Till:</label>
+		  <input type="text" placeholder="Type something…">
+		  
+		  
+		</form>
+		 		  <div id="date-boxes">  
+			  <div class="datepicker" id="datepicker-arrival"></div>
+			  <div class="datepicker" id="datepicker-departure"></div>
+		  </div> 
+		 
+		 <button class="btn btn-large btn-primary" id="search-trip" type="button">Sök</button>
 
+    </div>
 </script>
 
 <script type="text/template" id="tpl-trip">
