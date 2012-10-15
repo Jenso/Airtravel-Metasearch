@@ -3,3 +3,14 @@
 *.pyc
 local_settings.py
 travelx-virtualenv/*
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+.elc
+auto-save-list
+tramp
+.\#*
+.*
+!.gitignore
+!.gitmodules
+*~

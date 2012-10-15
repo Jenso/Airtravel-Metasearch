@@ -41,6 +41,10 @@ var SearchView = Backbone.Marionette.ItemView.extend({
     initialize: function() {
 
     },
+    onRender: function () {
+	this.$("#datepicker-arrival").datepicker();
+	this.$("#datepicker-departure").datepicker();
+    },
     events: {
 	'click #search-trip': 'searchTrip',
     },
