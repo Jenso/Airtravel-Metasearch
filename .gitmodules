@@ -1,3 +1,6 @@
 [submodule "core/static/bootstrap"]
 	path = core/static/bootstrap
 	url = git://github.com/twitter/bootstrap.git
+[submodule "core/static/backbone-marionette"]
+	path = core/static/backbone-marionette
+	url = git://github.com/marionettejs/backbone.marionette.git

@@ -1,10 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
+<!-- Underscore.js Templates -->
+<script type="text/template" id="tpl-search-area">
+  <h2>Test</h2>
+  <button class="btn btn-large btn-primary" id="search-trip" type="button">Sök</button>
+</script>
+
+<script type="text/template" id="tpl-trip">
+  <h2>Trip</h2>
+</script>
 
 <div class="row">
   <div class="span4">
     <h1>Hi!</h1>
+    
   </div>
   <div class="span8"><h1>ASD</h1></div>
+</div>
+<div class="row">
+  <div class="span3 offset2" id="content">
+  </div>
 </div>
 {% endblock %}
