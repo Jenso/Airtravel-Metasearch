@@ -237,9 +237,8 @@ SENTRY_LOGGING = {
 }
 
 
-
+env = os.environ.get('DJANGO_SETTINGS_MODULE')
 # set DJANGO_SETTINGS_MODULE to anything, to go into production mode
-try:
-    DJANGO_SETTINGS_MODULE
-except:
+if env == "TravelX.settings":
     from TravelX.local import *
+    print "meep"

@@ -7,7 +7,7 @@ try:
     from fabsettings import host
     env.hosts = host
 except:
-    env.hosts = ['proxz@stylematch.se']
+    env.hosts = ['proxz@flygprinsen.se']
 env.directory = '/home/ubuntu/TravelX'
 env.activate = 'source /home/ubuntu/TravelX/travelx-virtualenv/bin/activate'
 env.deploy_user = 'ubuntu'
@@ -107,7 +107,7 @@ def revert():
 
 
 def deploy_db_change(branch='master'):
-    test()
+    #test()
     backup_database()
     git_pull(branch=branch)
     install_requirements()
@@ -119,7 +119,7 @@ def deploy_db_change(branch='master'):
 
 
 def deploy(branch='master'):
-    test()
+    #test()
     git_pull(branch=branch)
     install_requirements()
     update_git_submodules()
