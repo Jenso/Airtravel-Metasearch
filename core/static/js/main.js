@@ -31,6 +31,7 @@ var TripView = Backbone.Marionette.ItemView.extend({
 var TripsView = Backbone.Marionette.CollectionView.extend({
     itemView: TripView,
     tagName: "ul",
+    id: "search-results",
     initialize: function() {
     },
 });

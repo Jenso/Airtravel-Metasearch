@@ -72,8 +72,24 @@
 </script>
 
 <script type="text/template" id="tpl-trip">
-  <h2>Trip</h2>
-  </script>
+  <div>
+    <div class="top">
+      <div class="arrival-time">
+	<div><img src="{{ STATIC_URL }}images/airlines/klm.png" /><span>11:30 Stockholm - 12:30 Geneve</span></div>
+      </div>
+      <div class="departure-time">
+	<div><img src="{{ STATIC_URL }}images/airlines/klm.png" /><span>16:30 Geneve - 18:20 Stockholm</span></div>
+      </div>
+
+    </div>
+  <div class="bottom">
+    <div class="agency">
+      <img src="{{ STATIC_URL }}images/travel-agencies/ticket_se.gif"/>
+      <div><span>1 500 kr</span></div>
+    </div>
+  </div>
+  </div>
+</script>
 
 <div class="row">
   <div class="span12 top-menu">
