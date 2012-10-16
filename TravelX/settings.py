@@ -243,5 +243,3 @@ try:
     DJANGO_SETTINGS_MODULE
 except:
     from TravelX.local import *
-else:
-    from TravelX.prod import *
