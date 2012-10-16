@@ -10,24 +10,65 @@
 <script type="text/template" id="tpl-search-area">
 	<div id="first-page" class="well">
 	
-		<form>
+		
+			<div class="span8"><div class="search-boxes-destination">
+				  
+				  <div class="pull-left">
+					  <label>Från:</label>
+					  <input  type="text" >
+				  </div>
+				  
+				  <div class="pull-right">
+				  	 <label>Till:</label>
+				  	 <input  type="text" >
+				  </div>
+				  
+			</div>
 
-		  <label>Från:</label>
-		  <input type="text" placeholder="Type something…">
-		  
-		   <label>Till:</label>
-		  <input type="text" placeholder="Type something…">
-		  
-		  
-		</form>
-		 		  <div id="date-boxes">  
+			
+		 <div class="search-boxes-date">  
 			  <div class="datepicker" id="datepicker-arrival"></div>
 			  <div class="datepicker" id="datepicker-departure"></div>
-		  </div> 
+		  </div> </div>
 		 
-		 <button class="btn btn-large btn-primary" id="search-trip" type="button">Sök</button>
+		 <div class="span3"><div class="search-boxes-additional-info pull-right">	
+		 
+			<label class="checkbox">
+			  <input type="checkbox" id="inlineCheckbox1" value=""> Enkelresa
+			</label>
+		 
+			<select>
+			  <option>1 Vuxen</option>
+			  <option>2 Vuxna</option>
+			  <option>3 Vuxna</option>
+			  <option>4 Vuxna</option>
+			  <option>5 Vuxna</option>
+			  <option>6 Vuxna</option>
+			  <option>7 Vuxna</option>
+			  <option>8 Vuxna</option>
+			  <option>9 Vuxna</option>
+			</select>
+			<br>
+			
+			<select>
+			  <option>0 Barn</option>
+			  <option>1 Barn</option>
+			  <option>2 Barn</option>
+			  <option>3 Barn</option>
+			  <option>4 Barn</option>
+			  <option>5 Barn</option>
+			  <option>6 Barn</option>
+			  <option>7 Barn</option>
+			  <option>8 Barn</option>
+			  <option>9 Barn</option>
+			</select>		
+		 
+		 <button class="btn btn-large btn-primary" id="search-trip" type="button"><i class="icon-white icon-search"></i> Sök Flygbiljetter</button>
+		 
+		 </div>
 
-    </div>
+
+</div>    </div>
 </script>
 
 <script type="text/template" id="tpl-trip">
@@ -35,11 +76,11 @@
   </script>
 
 <div class="row">
-  <div class="span4">
-    <h1>Hi!</h1>
-    
+  <div class="span12 top-menu">
+  	<h1>
+	  	Flygprinsen.se
+  	</h1>
   </div>
-  <div class="span8"><h1>ASD</h1></div>
 </div>
 <div class="row">
   <div class="span12" id="content">
