@@ -1,3 +1,5 @@
+{% load tags %}
+
 <html>
 <head>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
@@ -11,9 +13,7 @@
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js" type="text/javascript"></script>
-  <link rel="stylesheet/less" href="{{ STATIC_URL }}bootstrap.less">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/1.3.0/less-1.3.0.min.js"></script>
-
+{% bootstrap_less %}
 
 </head>
 <body>
