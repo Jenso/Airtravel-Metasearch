@@ -133,6 +133,8 @@ INSTALLED_APPS = (
     'core',
     'gunicorn',
     'storages',
+    'tastypie',
+    'tastypie_mongoengine',
 )
 
 
@@ -237,8 +239,13 @@ SENTRY_LOGGING = {
 }
 
 
+
+MONGO_DATABASE_NAME = 'trip'
+
+import mongoengine
+mongoengine.connect(MONGO_DATABASE_NAME)
+
 env = os.environ.get('DJANGO_SETTINGS_MODULE')
 # set DJANGO_SETTINGS_MODULE to anything, to go into production mode
 if env == "TravelX.settings":
     from TravelX.local import *
-    print "meep"
