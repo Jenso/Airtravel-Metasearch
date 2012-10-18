@@ -135,6 +135,7 @@ INSTALLED_APPS = (
     'storages',
     'tastypie',
     'tastypie_mongoengine',
+    'external_apis',
 )
 
 
