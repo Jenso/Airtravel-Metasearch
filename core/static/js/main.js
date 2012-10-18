@@ -28,13 +28,19 @@ var TripView = Backbone.Marionette.ItemView.extend({
 });
 
 
-var TripsView = Backbone.Marionette.CollectionView.extend({
+var TripsView = Backbone.Marionette.CompositeView.extend({
     itemView: TripView,
-    tagName: "ul",
-    id: "search-results",
+    template: "#tpl-trips",
+    tagName: "div",
+    className: "search-result-list",
     initialize: function() {
     },
+    appendHtml: function(collectionView, itemView, index){
+    	console.log(collectionView.$el, collectionView.$el.find("#search-results"), itemView.el);
+    collectionView.$el.find("#search-results").prepend(itemView.el);
+    }
 });
+
 
 var SearchView = Backbone.Marionette.ItemView.extend({
     //itemView: PinView,
