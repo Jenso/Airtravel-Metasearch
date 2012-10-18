@@ -48,7 +48,7 @@ class MongoDBResource(Resource):
         """
         Maps mongodb documents to Document class.
         """
-        return map(Document, self.get_collection().find())
+        return map(Document, self.get_collection().find().sort( { 'total-price' : 1 } ))
 
     def obj_get(self, request=None, **kwargs):
         """
@@ -111,13 +111,14 @@ class DocumentResource(MongoDBResource):
 
     id = fields.CharField(attribute="_id")
     currency = fields.CharField(attribute="currency", null=True)
-    total_price1 = fields.DictField(attribute="inbound", null=True)
+    inbound = fields.DictField(attribute="inbound", null=True)
+    outbound = fields.DictField(attribute="outbound", null=True)
     total_price = fields.CharField(attribute="total-price", null=True)
 
     class Meta:
         resource_name = "trips"
-        list_allowed_methods = ["delete", "get", "post"]
+        list_allowed_methods = ["get"]
         authorization = Authorization()
         object_class = Document
         collection = "test_collection" # collection name
-        limit = 1
+        limit = 5

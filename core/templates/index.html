@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load url from future %}
 {% block content %}
 <style>
   .datepicker {
@@ -6,6 +7,9 @@
   }
 </style>
 <!-- Underscore.js Templates -->
+<script>
+TRIPS_API_URL = "{% url 'api_dispatch_list' api_name="trips" resource_name="trips" %}";
+</script>
 
 <script type="text/template" id="tpl-search-area">
 	<div id="first-page">
@@ -90,20 +94,55 @@
 <script type="text/template" id="tpl-trip">
   <div>
     <div class="top">
-    	
       <div class="arrival-time">
-      <span class="label-utresa"><img src="{{ STATIC_URL }}images/utresa.png"/>Utresa</span>
-	<div><img style="height:40px;width:40px;" src="{{ STATIC_URL }}images/airlines/6a010536445ddd970b015390cd31be970b-800wi.jpg" /><span>11:30 Los Angeles - 12:30 Los Angeles<span class="arrival-time-travel">Restid: <span class="time">7h 15min</span> <span style="color:green;display:inline;">(Direktflyg)</span><span style="display:inline;margin-left:10px;text-decoration:underline;font-size:10px;"><a href="#">Flight info</a></span></span></span>
+      <span class="label-utresa">
+	<img src="{{ STATIC_URL }}images/utresa.png"/>Utresa
+      </span>
+      <div>
+	  <img style="height:40px;width:40px;" src="{{ STATIC_URL }}images/airlines/6a010536445ddd970b015390cd31be970b-800wi.jpg" />
+	  <span><%= outbound_departure_time %> <%= outbound['departure-where-name'] %> - <%= outbound_arrival_time %> <%= outbound['arrival-where-name'] %>
+	    <span class="arrival-time-travel">Restid: 
+	      <span class="time">7h 15min</span> 
+	      <span style="color:green;display:inline;">
+		<% if(inbound['stops'] == "0") { %>
+		(Direktflyg)
+		<% } else if(inbound['stops'] == "1") { %>
+		(1 byte)
+		<% } else { %>
+		(<%= inbound['stops'] %> Byten)
+		<% } %>
+	      </span>
+	      <span style="display:inline;margin-left:10px;text-decoration:underline;font-size:10px;">
+		<a href="#">Flight info</a>
+	      </span>
+	    </span>
+	  </span>
 	</div>
       </div>
       <div class="departure-time">
       <span class="label-hemresa"><img src="{{ STATIC_URL }}images/hemresa.png"/>Hemresa</span>
-	<div><img  style="height:40px;width:40px;" src="{{ STATIC_URL }}images/airlines/SAS-AIR-1.png" /><span>11:30 Johannesburg - 12:30 Los Angeles<span class="departure-time-travel">Restid: <span class="time">12h 15min</span> (1 Byte)<span style="display:inline;margin-left:10px;text-decoration:underline;font-size:10px;"><a href="#">Flight info</a></span></span></span>
-	</div>
+      <div>
+	<img  style="height:40px;width:40px;" src="{{ STATIC_URL }}images/airlines/SAS-AIR-1.png" />
+	<span><%= inbound_departure_time %> <%= inbound['departure-where-name'] %> - <%= inbound_arrival_time %> <%= inbound['arrival-where-name'] %>
+	  <span class="departure-time-travel">Restid: 
+	    <span class="time">12h 15min</span> 
+	    <% if(inbound['stops'] == "0") { %>
+	    (Direktflyg)
+	    <% } else if(inbound['stops'] == "1") { %>
+	    (1 byte)
+	    <% } else { %>
+	    (<%= inbound['stops'] %> Byten)
+	    <% } %>
+	    <span style="display:inline;margin-left:10px;text-decoration:underline;font-size:10px;">
+	      <a href="#">Flight info</a>
+	    </span>
+	  </span>
+	</span>
+      </div>
       </div>
 
       <div class="lowest-price">
-      	<span>14999 kr</span>
+      	<span><%= total_price %> kr</span>
       	
       	<a href="#" class="btn btn-large btn-warning">Gå till resa</a>
    

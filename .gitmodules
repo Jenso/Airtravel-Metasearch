@@ -4,3 +4,9 @@
 [submodule "core/static/backbone-marionette"]
 	path = core/static/backbone-marionette
 	url = git://github.com/marionettejs/backbone.marionette.git
+[submodule "core/static/js/backbone"]
+	path = core/static/js/backbone
+	url = git://github.com/documentcloud/backbone.git
+[submodule "core/static/js/backbone-tastypie"]
+	path = core/static/js/backbone-tastypie
+	url = https://github.com/amccloud/backbone-tastypie

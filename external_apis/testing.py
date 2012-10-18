@@ -19,10 +19,17 @@ db = connection.trip
 collection = db.test_collection
 i = 0
 print xml_parsed
+collection.remove()
+
+def time_difference(x, y):
+    from datetime import datetime
+    x = datetime.strptime(x, "%Y-%m-%dT%H:%M")
+    y = datetime.strptime(y, "%Y-%m-%dT%H:%M")
+    return y-x
 
 for child in xml_parsed.getroot():
     dictionary = {}
-    dictionary['total-price'] = child.find("total-price").text
+    dictionary['total-price'] = int(child.find("total-price").text)
     dictionary['currency'] = child.find("currency").text
     dictionary['deeplink'] = child.find("deeplink").text
 
@@ -86,8 +93,9 @@ for child in xml_parsed.getroot():
         trips.append(trip_dict)
     
     i += 1
-    #print 
-    dictionary['_id'] = "".join([child.find("outbound/departure-when").text, child.find("outbound/flightnumbers").text])
+    #print
+    toHex = lambda x:"".join([hex(ord(c))[2:].zfill(2) for c in x])
+    dictionary['_id'] = toHex("".join([child.find("outbound/departure-when").text, child.find("outbound/flightnumbers").text]))
     collection.insert(dictionary)
     #print dictionary
     #import pdb;pdb.set_trace()
