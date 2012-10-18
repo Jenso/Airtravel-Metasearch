@@ -8,17 +8,17 @@
 <!-- Underscore.js Templates -->
 
 <script type="text/template" id="tpl-search-area">
-	<div id="first-page" class="well">
+	<div id="first-page">
 	
 		
-			<div class="span8"><div class="search-boxes-destination">
+			<div class="span"><div class="search-boxes-destination">
 				  
 				  <div class="pull-left">
 					  <label>Från:</label>
 					  <input  type="text" >
 				  </div>
 				  
-				  <div class="pull-right">
+				  <div class="pull-left right-one">
 				  	 <label>Till:</label>
 				  	 <input  type="text" >
 				  </div>
@@ -31,7 +31,7 @@
 			  <div class="datepicker" id="datepicker-departure"></div>
 		  </div> </div>
 		 
-		 <div class="span3"><div class="search-boxes-additional-info pull-right">	
+		 <div class="span"><div class="search-boxes-additional-info">	
 		 
 			<label class="checkbox">
 			  <input type="checkbox" id="inlineCheckbox1" value=""> Enkelresa
@@ -66,21 +66,48 @@
 		 <button class="btn btn-large btn-primary" id="search-trip" type="button"><i class="icon-white icon-search"></i> Sök Flygbiljetter</button>
 		 
 		 </div>
+	</div>   
 
+	<div class="span"><div class="front-page-about-us">
+		<h3>Flygprinsen älskar att resa,</h3>
+		<p>Han vet hur jobbigt det är att hitta de bästa flygbiljetterna då det finns massvis med resebyråer på internet. <br><br>Han är den Prinsen som hjälper dig att söka fram de bästa biljetterna hos 30 resebyråer och över 700 flygbolag!</p>
+	</div></div>
 
-</div>    </div>
+</div>
 </script>
+
+
+<script type="text/template" id="tpl-trips">
+
+	<ul id="search-results">
+		
+		
+	</ul>
+
+</script>
+
 
 <script type="text/template" id="tpl-trip">
   <div>
     <div class="top">
+    	
       <div class="arrival-time">
-	<div><img src="{{ STATIC_URL }}images/airlines/klm.png" /><span>11:30 Stockholm - 12:30 Geneve</span></div>
+      <span class="label-utresa"><img src="{{ STATIC_URL }}images/utresa.png"/>Utresa</span>
+	<div><img style="height:40px;width:40px;" src="{{ STATIC_URL }}images/airlines/6a010536445ddd970b015390cd31be970b-800wi.jpg" /><span>11:30 Los Angeles - 12:30 Los Angeles<span class="arrival-time-travel">Restid: <span class="time">7h 15min</span> <span style="color:green;display:inline;">(Direktflyg)</span><span style="display:inline;margin-left:10px;text-decoration:underline;font-size:10px;"><a href="#">Flight info</a></span></span></span>
+	</div>
       </div>
       <div class="departure-time">
-	<div><img src="{{ STATIC_URL }}images/airlines/klm.png" /><span>16:30 Geneve - 18:20 Stockholm</span></div>
+      <span class="label-hemresa"><img src="{{ STATIC_URL }}images/hemresa.png"/>Hemresa</span>
+	<div><img  style="height:40px;width:40px;" src="{{ STATIC_URL }}images/airlines/SAS-AIR-1.png" /><span>11:30 Johannesburg - 12:30 Los Angeles<span class="departure-time-travel">Restid: <span class="time">12h 15min</span> (1 Byte)<span style="display:inline;margin-left:10px;text-decoration:underline;font-size:10px;"><a href="#">Flight info</a></span></span></span>
+	</div>
       </div>
 
+      <div class="lowest-price">
+      	<span>14999 kr</span>
+      	
+      	<a href="#" class="btn btn-large btn-warning">Gå till resa</a>
+   
+	</div>
     </div>
   <div class="bottom">
     <div class="agency">
@@ -119,13 +146,16 @@
       <img src="{{ STATIC_URL }}images/travel-agencies/ticket_se.gif"/>
       <div><span>1 500 kr</span></div>
     </div>
-    <div class="agency">
+    <div class="cheapest-agency">
       <img src="{{ STATIC_URL }}images/travel-agencies/ticket_se.gif"/>
-      <div><span>1 500 kr</span></div>
+      <div><span>14 999 kr</span></div>
     </div>
   </div>
   </div>
 </script>
+
+
+
 
 <div class="row">
   <div class="span12 top-menu">

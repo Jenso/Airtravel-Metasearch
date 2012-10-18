@@ -1,32 +1,209 @@
-#search-results {
-    background-color:white;
-    margin-left:0px;
-    li {
-	margin:20px;
-	border:1px solid black;
-	background-color:#e7e7e7;
-	list-style-type:none;
-    }
-    .arrival-time, .departure-time {
-	padding:15px;
-	display:inline-block;
-	background-color:#f5f5f5;
-    }
-    .agency {
-	padding:4px;
-	padding-right:2px;
-	display:inline-block;
-	img {
-	    
-	    xpadding-bottom:1px;
-	    display:block;
-	}
-	span {
+// Listan med sökresultaten
 
+.search-result-list{
+
+
+	
+	
+	#search-results {
+	    xbackground-color:white;
+	    margin-left:0px;
+	    
+	    //EACH SEARCH RESULT 
+	    li {	
+		    
+		    
+		    background: rgb(238,238,238); /* Old browsers */
+			/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+			background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VlZWVlZSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNjY2NjY2MiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+			background: -moz-linear-gradient(top,  rgba(238,238,238,1) 0%, rgba(204,204,204,1) 100%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(238,238,238,1)), color-stop(100%,rgba(204,204,204,1))); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* Opera 11.10+ */
+			background: -ms-linear-gradient(top,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* IE10+ */
+			background: linear-gradient(to bottom,  rgba(238,238,238,1) 0%,rgba(204,204,204,1) 100%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 ); /* IE6-8 */
+		
+		
+			xbox-shadow: #7E7E7E 0px 6px 6px 0px;
+			.border-radius(3px);
+			padding:15px;
+			margin-bottom:20px;
+			list-style-type:none;
+			padding-top: 20px;	
+			
+			.label-utresa, .label-hemresa{
+				margin-top:-40px;
+				font-size:12px;
+				xtext-transform: uppercase;
+				margin-left:-17px;
+				img{
+					width:12px;
+					margin-top:2px;
+					margin-right:5px;
+				}
+			}
+			
+			.label-utresa{
+				margin-left:-17px;
+				img{
+		
+				}
+			}
+	
+		}
+	    
+	    .top{
+		    height: 100px;
+	    }
+	    
+	    .arrival-time, .departure-time {
+			padding:20px;
+			display:inline-block;
+			background-color:#f5f5f5;
+			font-size:14px;
+			margin-bottom:15px;
+			width:340px;
+			margin-top:10px;
+			float:left;
+			img{
+				margin-right:10px;
+				vertical-align: top;
+			}
+			span{
+				width:270px;
+				text-align: left;	
+				display:inline-block;
+			}
+	    }
+		    
+	    .arrival-time{
+		    margin-right:10px;
+	    }
+	    
+	    .departure-time-travel{
+	    	font-size:11px;
+	    	float:right;
+	    	color:#686868;
+		    .time{
+			    font-weight: bold;
+			    display:inline;
+			    color:black;
+		    }
+	    }
+	    
+	    .arrival-time-travel{
+	        font-size:11px;
+	        float:right;
+	        color:#686868;
+		    .time{
+			     font-weight: bold;
+			     display:inline;
+			     color:black;
+		    }
+	    }
+	    
+	    .lowest-price{
+		    float:right;
+		    width:120px;
+		    padding-top:35px;
+		    height:130px;
+		    span{
+			    float:left;
+			    font-size:28px;
+			    color:#F73100;
+			    margin-bottom:55px;
+		    }
+	    }
+	    
+	    
+	    
+	    div.bottom { 
+	    	width:770px;
+	    	
+	    		    	
+	    	.agency{
+				filter: grayscale(100%);
+				-webkit-filter: grayscale(100%);
+				-moz-filter: grayscale(100%);
+				-ms-filter: grayscale(100%);
+				-o-filter: grayscale(100%);
+				padding:4px;
+				padding-right:2px;
+				display:inline-block;
+				width:64px;
+				border: 2px solid transparent;
+				font-size:11px;
+				text-align: center;
+				opacity:0.4;
+				filter:alpha(opacity=40);
+				img {
+				    xpadding-bottom:1px;
+				    display:block;
+				}
+				
+				div {
+				    border:1px solid #cccccc;
+				    xwidth:69px;
+				    background-color:rgb(180, 180, 180);
+				}	
+					
+				&:hover{
+					border: 2px solid darkgray;
+					filter: grayscale(20%);
+					-webkit-filter: grayscale(20%);
+					-moz-filter: grayscale(20%);
+					-ms-filter: grayscale(20%);
+					-o-filter: grayscale(20%);
+					color:red;
+					opacity:0.8;
+					filter:alpha(opacity=80);
+					div{
+						background-color:#E9E9E9;
+					}
+				}
+				
+				span {
+				}
+			}
+			
+			&hover{
+			    filter: grayscale(20%);
+				-webkit-filter: grayscale(20%);
+				-moz-filter: grayscale(20%);
+				-ms-filter: grayscale(20%);
+				-o-filter: grayscale(20%);
+				color:red;
+				background-color:#A8A8A8;
+		    }
+
+
+	    }
+	    
+		
+		.cheapest-agency{
+			border: 2px solid darkgray;
+			filter: grayscale(0%);
+			-webkit-filter: grayscale(0%);
+			-moz-filter: grayscale(0%);
+			-ms-filter: grayscale(0%);
+			-o-filter: grayscale(0%);
+			color:green;
+			padding:4px;
+			padding-right:2px;
+			display:inline-block;
+			width:64px;
+			border: 2px solid #a1a1a1;
+			font-size:11px;
+			text-align: center;
+			.pull-right();
+			img {
+			    display:block;
+			}
+			div {
+			   border:1px solid #cccccc;
+				background-color:#E9E9E9;
+			}
+		}
 	}
-	div {
-	    border:1px solid #cccccc;
-	    width:69px;
-	}
-    }
 }
