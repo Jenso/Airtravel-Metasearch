@@ -91,6 +91,8 @@ var SearchView = Backbone.Marionette.ItemView.extend({
     initialize: function() {
 
     },
+    
+    
     onRender: function () {
         $.datepicker.regional['sv'] = {
             closeText: 'Stäng',
@@ -99,28 +101,34 @@ var SearchView = Backbone.Marionette.ItemView.extend({
             currentText: 'Idag',
             monthNames: ['Januari','Februari','Mars','April','Maj','Juni',
                          'Juli','Augusti','September','Oktober','November','December'],
-            monthNamesShort: ['Jan','Feb','Mar','Apr','Maj','Jun',
-                              'Jul','Aug','Sep','Okt','Nov','Dec'],
+            monthNamesShort: ['Januari','Februari','Mars','April','Maj','Juni',
+                         'Juli','Augusti','September','Oktober','November','December'],
             dayNamesShort: ['Sön','Mån','Tis','Ons','Tor','Fre','Lör'],
             dayNames: ['Söndag','Måndag','Tisdag','Onsdag','Torsdag','Fredag','Lördag'],
             dayNamesMin: ['Sö','Må','Ti','On','To','Fr','Lö'],
-            weekHeader: 'Ve',
+            weekHeader: '',
             dateFormat: 'yy-mm-dd',
             firstDay: 1,
             isRTL: false,
             showMonthAfterYear: false,
+            minDate: 0, 
+            changeMonth:true,
+            changeYear: true,
+            showOtherMonths:true,
+            selectOtherMonths:true,
+            showWeek:true,
             yearSuffix: ''};
         $.datepicker.setDefaults($.datepicker.regional['sv']);
         var _this = this;
         this.$("#datepicker-departure-date").datepicker({firstDay: 1,
-                                                  onSelect: function(dateText, inst) {
-                                                      _this.$("#datepicker-departure-date input").val(dateText);
-						      console.log("hm");
-                                                  }
-                                                 });
+        											onSelect: function(dateText, inst){
+	        											_this.departureDateFromDatepicker =  dateText;
+        											}
+        											
+        											});
         this.$("#datepicker-return-date").datepicker({firstDay: 1,
                                                     onSelect: function(dateText, inst) {
-                                                        _this.$("#datepicker-return-date input").val(dateText);
+                                                    	_this.arrivalDateFromDatepicker = dateText;
                                                     }
 
                                                    });
@@ -128,24 +136,75 @@ var SearchView = Backbone.Marionette.ItemView.extend({
     events: {
         'click #search-trip': 'searchTrip',
     },
+    
+    
+    testNaN: function(parsedDate1, parsedDate2){
+    	
+    	var date1 = isNaN(parsedDate1);
+    	var date2 = isNaN(parsedDate2);
+    
+	    if (isNaN(parsedDate1) && isNaN(parsedDate2)){
+		    return 2;
+	    }
+	    else if (isNaN(parsedDate1)){
+		    return 3;
+	    }
+	    else if (isNaN(parsedDate2)){
+		    return 4;
+	    }
+	    else{
+		    null;
+	    }
+    },	
+    
+    dateValidation: function(date1, date2){
+    	var d1 = Date.parse(date1);
+    	var d2 = Date.parse(date2);
+    	if (d2 >= d1){
+			return 0;
+		}
+	    else if (d2 < d1){
+		    return 1;
+	    }
+	    else{
+		    return this.testNaN(d1, d2);
+	    }
+    },
+    
     searchTrip: function() {
-	var tripType = {
-	    '0': 'ROUNDTRIP',
-	    '1': 'ONEWAY',
-	};
+		var tripType = {
+		    '0': 'ROUNDTRIP',
+		    '1': 'ONEWAY',
+		};
+	
+	
+	
         var searchParams = {
             'tripType': tripType[this.$('trip-type').val()],
             "source":"zanox",
             'departureIata': 'CPH',
             'arrivalIata': 'NCE',
-            "departureDate": this.$("#datepicker-departure-date input").val(),
-            "returnDate": this.$("#datepicker-return-date input").val(),
+            "departureDate": this.departureDateFromDatepicker,
+            "returnDate": this.arrivalDateFromDatepicker,
             "ticketType":"ECONOMY",
             "adults": this.$('#number-adults').val(),
             "children": this.$('#number-children').val(),
             "infants":"0",
         };
-        Travel.vent.trigger("search:start", searchParams);
+        
+        var dateTest = this.dateValidation(searchParams.departureDate, searchParams.returnDate);
+        console.log(dateTest);
+        if (dateTest == 0){
+        	console.log("begin search");
+	        Travel.vent.trigger("search:start", searchParams);
+        }
+        else if (dateTest == 1){
+        	console.log("We don't travel to the future yet");
+        }
+        else{
+	        console.log("Please enter");
+        };
+        
     },
 });
 

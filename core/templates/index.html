@@ -15,29 +15,41 @@ TRIPS_API_URL = "{% url 'api_dispatch_list' api_name="trips" resource_name="trip
 	<div id="first-page">
 	
 		
-			<div class="span"><div class="search-boxes-destination">
+		<div class="span">
+			<h1>Sök efter de bästa flygbiljetterna bland nätets resebyråer</h1>
+			<div class="search-boxes-destination">
 				  
-				  <div class="pull-left">
-					  <label>Från:</label>
-					  <input  type="text" >
-				  </div>
+				 <div class="pull-left departure-options">
+						<label>Avreseort:</label>
+						<input  type="text" >
+					  	<div class="datepicker" id="datepicker-departure-date" >
+						</div>
+				</div>
 				  
-				  <div class="pull-left right-one">
-				  	 <label>Till:</label>
+				<div class="pull-right arrival-options">
+				  	 <label>Destination:</label>
 				  	 <input  type="text" >
-				  </div>
+				  	 <div class="datepicker" id="datepicker-return-date"">
+				     </div>
+				</div>
 				  
 			</div>
-
 			
-		 <div class="search-boxes-date">  
-			  <div class="datepicker" id="datepicker-departure-date">
+		</div>
+	
+		 
+
+		<!--
+	  <div class="datepicker" id="datepicker-departure-date" >
 			    <input type="text">
 			  </div>
+			 
 			  <div class="datepicker" id="datepicker-return-date">
 			    <input type="text">
 			  </div>
-		  </div> </div>
+			  -->
+			  
+	
 		 
 		 <div class="span"><div class="search-boxes-additional-info">	
 		 
@@ -76,11 +88,6 @@ TRIPS_API_URL = "{% url 'api_dispatch_list' api_name="trips" resource_name="trip
 		 
 		 </div>
 	</div>   
-
-	<div class="span"><div class="front-page-about-us">
-		<h3>Flygprinsen älskar att resa</h3>
-		<p>Han vet hur jobbigt det är att hitta de bästa flygbiljetterna då det finns massvis med resebyråer på internet. <br><br>Han är den Prinsen som hjälper dig att söka fram de bästa biljetterna hos 30 resebyråer och över 700 flygbolag!</p>
-	</div></div>
 
 </div>
 </script>
