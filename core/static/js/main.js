@@ -134,6 +134,7 @@ var SearchView = Backbone.Marionette.ItemView.extend({
     },
     events: {
         'click #search-trip': 'searchTrip',
+        'click #trip-type' : 'hideArrivalDate' 
     },
     initQuickselect: function() {
 	//this.$('input#from').quickselect({data: ['option1', 'option2', 'option3']});
@@ -209,6 +210,12 @@ var SearchView = Backbone.Marionette.ItemView.extend({
         };
         
     },
+    
+    hideArrivalDate: function(){
+    	this.$('#label-to-return-date').toggle();
+    	this.$('#datepicker-return-date').toggle();
+	}, 
+    
 });
 
 Travel.addInitializer(function(options){
