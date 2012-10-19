@@ -129,12 +129,13 @@ var SearchView = Backbone.Marionette.ItemView.extend({
         'click #search-trip': 'searchTrip',
     },
     searchTrip: function() {
-	var tripType = {
-	    '0': 'ROUNDTRIP',
-	    '1': 'ONEWAY',
-	};
+	if(this.$('#trip-type').attr('checked')) {
+	    var tripType = 'ONEWAY';
+	} else {
+	    var tripType = 'ROUNDTRIP';
+	}
         var searchParams = {
-            'tripType': tripType[this.$('trip-type').val()],
+            'tripType': tripType,
             "source":"zanox",
             'departureIata': 'CPH',
             'arrivalIata': 'NCE',
