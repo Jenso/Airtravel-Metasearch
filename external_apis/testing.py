@@ -16,7 +16,7 @@ xml_parsed = ET.parse("test.xml")
 from pymongo import Connection
 connection = Connection()
 db = connection.trip
-collection = db.test_collection
+collection = db.trips
 i = 0
 print xml_parsed
 collection.remove()
@@ -95,7 +95,8 @@ for child in xml_parsed.getroot():
     i += 1
     #print
     toHex = lambda x:"".join([hex(ord(c))[2:].zfill(2) for c in x])
-    dictionary['_id'] = toHex("".join([child.find("outbound/departure-when").text, child.find("outbound/flightnumbers").text]))
+    key = "".join([child.find("outbound/departure-when").text, child.find("outbound/flightnumbers").text])
+    #dictionary['_id'] = key.encode("hex")[0:24]
     collection.insert(dictionary)
     #print dictionary
     #import pdb;pdb.set_trace()
