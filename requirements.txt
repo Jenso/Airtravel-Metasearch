@@ -16,4 +16,5 @@ python-dateutil==1.5
 requests==0.14.1
 slumber==0.4.2
 ssh==1.7.14
+tornado==2.4
 wsgiref==0.1.2
