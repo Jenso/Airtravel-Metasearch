@@ -145,19 +145,28 @@ var SearchView = Backbone.Marionette.ItemView.extend({
     extractIata: function(str) {
 	return str.split(",")[1];
     },
+    
     testNaN: function(parsedDate1, parsedDate2){
     	
     	var date1 = isNaN(parsedDate1);
     	var date2 = isNaN(parsedDate2);
     
 	    if (isNaN(parsedDate1) && isNaN(parsedDate2)){
+	    	alert("Var god och välj datum för din resa.")
 		    return 2;
 	    }
 	    else if (isNaN(parsedDate1)){
+	    	alert("Var god och välj datum för din utresa.")
 		    return 3;
 	    }
 	    else if (isNaN(parsedDate2)){
-		    return 4;
+	    	if(this.$('#trip-type').attr('checked')){
+		    	return 0;
+	    	}
+	    	else{
+	    		alert("Var god och välj datum för din hemresa.")
+	    		return 4;
+	    	}
 	    }
 	    else{
 		    null;
@@ -171,6 +180,7 @@ var SearchView = Backbone.Marionette.ItemView.extend({
 			return 0;
 		}
 	    else if (d2 < d1){
+	    	alert("Ditt datum för utresa ligger efter ditt datum för hemresa, var god försök igen :) ");
 		    return 1;
 	    }
 	    else{
@@ -203,7 +213,6 @@ var SearchView = Backbone.Marionette.ItemView.extend({
 	        Travel.vent.trigger("search:start", searchParams);
         }
         else if (dateTest == 1){
-        	console.log("We don't travel to the future yet");
         }
         else{
 	        console.log("Please enter");
