@@ -8,7 +8,11 @@
 </style>
 <!-- Underscore.js Templates -->
 <script>
-TRIPS_API_URL = "{% url 'api_dispatch_list' api_name="trips" resource_name="trips" %}";
+AIRPORTS_API_URL = "{% url 'api_dispatch_list' api_name="general" resource_name="airports" %}";
+</script>
+
+<script type="text/template" id="tpl-waiting-search">
+  <h1>LADDAR!</h1>
 </script>
 
 <script type="text/template" id="tpl-search-area">
@@ -21,17 +25,20 @@ TRIPS_API_URL = "{% url 'api_dispatch_list' api_name="trips" resource_name="trip
 				  
 				 <div class="pull-left departure-options">
 						<label>Avreseort:</label>
-						<input  type="text" >
+						<input id="from" type="text" >
+		
 						<label>Avresedatum:</label>
+
 					  	<div class="datepicker" id="datepicker-departure-date" >
 						</div>
 				</div>
 				  
 				<div class="pull-right arrival-options">
 				  	 <label>Destination:</label>
-				  	 <input  type="text" >
+				  	 <input id="to" type="text" >
 				  	 <label>Hemresedatum:</label>
-				  	 <div class="datepicker" id="datepicker-return-date"">
+				  	 <div class="datepicker" id="datepicker-return-date">
+
 				     </div>
 				</div>
 				  

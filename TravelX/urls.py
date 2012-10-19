@@ -10,7 +10,7 @@ urlpatterns = patterns('',
     url(r'^$', TemplateView.as_view(template_name="index.html"),
             {}, name='home'),
     url(r'^',
-        include('external_apis.urls')),
+        include('core.urls')),
 
     # url(r'^TravelX/', include('TravelX.foo.urls')),
 
