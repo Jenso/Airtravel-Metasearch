@@ -72,40 +72,22 @@ var TripsView = Backbone.Marionette.CompositeView.extend({
     tagName: "div",
     className: "search-result-list",
     initialize: function() {
-        this.collection.fetch({
-            data: {
-                'tripType':'ROUNDTRIP',
-                "source":"zanox",
-                'departureIata': 'CPH',
-                'arrivalIata': 'NCE',
-                "departureDate":"2012-11-01",
-                "returnDate":"2012-11-06",
-                "ticketType":"ECONOMY",
-                "adults":"1",
-                "children":"0",
-                "infants":"0",
-            },
-            success: function(collection, response) {
-                console.log("ho", collection, response);
-            }
-        });
     },
     appendHtml: function(collectionView, itemView, index){
         collectionView.$el.find("#search-results").append(itemView.el);
     }
 });
 
+var WaitingSearchView = Backbone.Marionette.ItemView.extend({
+    template: "#tpl-waiting-search"
+});
 
 var SearchView = Backbone.Marionette.ItemView.extend({
     //itemView: PinView,
     template: "#tpl-search-area",
     initialize: function() {
+	//_.bindAll(this, 'getQuickselectData');
 	this.airportsCollection = new AirportsCollection();
-	this.airportsCollection.fetch({
-	    success: function(res) {
-		console.log(res);
-	    }
-	})
     },
     onRender: function () {
         $.datepicker.regional['sv'] = {
@@ -146,7 +128,13 @@ var SearchView = Backbone.Marionette.ItemView.extend({
         'click #search-trip': 'searchTrip',
     },
     initQuickselect: function() {
-	this.$('input#from').quickselect({data: ['option1', 'option2', 'option3']});
+	//this.$('input#from').quickselect({data: ['option1', 'option2', 'option3']});
+	var options = {ajax: "http://localhost:8888/airports/", minChars: 2};
+	this.$('input#from').quickselect(options);
+	this.$('input#to').quickselect(options);
+    },
+    extractIata: function(str) {
+	return str.split(",")[1];
     },
     searchTrip: function() {
 	if(this.$('#trip-type').attr('checked')) {
@@ -157,8 +145,8 @@ var SearchView = Backbone.Marionette.ItemView.extend({
         var searchParams = {
             'tripType': tripType,
             "source":"zanox",
-            'departureIata': 'CPH',
-            'arrivalIata': 'NCE',
+            'departureIata': this.extractIata(this.$('input#from').val()),
+            'arrivalIata': this.extractIata(this.$('input#to').val()),
             "departureDate": this.$("#datepicker-departure-date input").val(),
             "returnDate": this.$("#datepicker-return-date input").val(),
             "ticketType":"ECONOMY",
@@ -181,12 +169,7 @@ Travel.addInitializer(function(options){
             "*actions": "defaultRoute",
         },
         search: function() {
-            var trips = new TripsCollection();
-            var TripsView1 = new TripsView({
-                collection: trips,
-            });
 
-            Travel.mainRegion.show(TripsView1);
 
         },
         defaultRoute: function() {
@@ -200,6 +183,34 @@ Travel.addInitializer(function(options){
 
 
     Travel.vent.on("search:start", function(searchTerm){
+	Travel.mainRegion.show(new WaitingSearchView());
+
+	var trips = new TripsCollection();
+	var test_data =  {
+                'tripType':'ROUNDTRIP',
+                'departureIata': 'CPH',
+                'arrivalIata': 'NCE',
+                "departureDate":"2012-11-01",
+                "returnDate":"2012-11-06",
+                "ticketType":"ECONOMY",
+                "adults":"1",
+                "children":"0",
+                "infants":"0",
+            };
+
+        trips.fetch({
+	    data: searchTerm,
+            success: function(collection, response) {
+		Travel.mainRegion.show(
+		    new TripsView({
+			collection: collection,
+		    })
+		);
+
+                console.log("ho", collection, response);
+            }
+        });
+
         //Backbone.history.navigate("search/" + searchTerm);
         console.log(searchTerm);
     });

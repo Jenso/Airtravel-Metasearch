@@ -104,7 +104,17 @@ var QuickSelect;
         }
         var label = self.getLabel(li.item),
             values = getValues(li.item);
+	  
+	  /* OWN CODE: Change representation for the selected airport, in input field */
+	function trim(str) {
+	    return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+	}
+	parts = label.split("-")
+	label = trim(parts[2]) + ", " + trim(parts[0]);
+	  /* END OWN CODE */
+
         $input_element.lastSelected = label;
+
         $input_element.val(label); // Set the visible value
         previous_value = label;
         $results_list.empty(); // clear the results list
@@ -114,6 +124,7 @@ var QuickSelect;
         return true;
       };
       var selectCurrent = function(){
+
         var li = $("li."+options.selectedClass, $results_list).get(0);
         if(li){
           return self.selectItem(li);
@@ -186,8 +197,8 @@ var QuickSelect;
             $lis = $('li', $results_list);
         // reposition
         $results_list.css({
-          width: parseInt(iWidth,10) + "px",
-          top: pos.top + $input_element.height() + 5 + "px",
+          width: parseInt(iWidth,10) + 20 + "px",
+            top: pos.top + $input_element.height() + 42 + "px",
           left: pos.left + "px"
         });
         if(ie_stupidity){$results_mask.css({
@@ -250,6 +261,7 @@ var QuickSelect;
             }else{moveSelect(1);}
             break;
           case 13: // Enter/Return - select item and stay in field
+
             if(selectCurrent()){
               e.preventDefault();
               $input_element.select();
@@ -294,6 +306,7 @@ var QuickSelect;
             if(options.exactMatch && $input_element.val() != $input_element.lastSelected){self.selectItem(null,true);}
           }, 100);
         }else{
+
           // Select the current item
           timeout = setTimeout(function(){
             if(activeSelection>-1){selectCurrent();}
@@ -410,13 +423,14 @@ var QuickSelect;
       callback(nice_list);
     },
     ajax  : function(q,callback){
-      var url = this.options.ajax + "?q=" + encodeURI(q);
+	var url = this.options.ajax + "?q=" + encodeURI(q);
       for(var i in this.options.ajaxParams){
         if(this.options.ajaxParams.hasOwnProperty(i)){
           url += "&" + i + "=" + encodeURI(this.options.ajaxParams[i]);
         }
       }
       $.getJSON(url, callback);
+
     }
   };
 

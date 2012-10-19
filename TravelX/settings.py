@@ -132,7 +132,7 @@ INSTALLED_APPS = (
     'storages',
     'tastypie',
     'tastypie_mongoengine',
-    'external_apis',
+    'tornad',
     'south',
     'django_extensions',
 )

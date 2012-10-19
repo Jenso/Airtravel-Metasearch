@@ -1,13 +1,5 @@
-import tornado.ioloop
-import tornado.web
-from tornado import httpclient
-import mongoengine
-import json
 import elementtree.ElementTree as ET
-
-# init mongodb connection
-MONGO_DATABASE_NAME = 'trip'
-db = mongoengine.connect(MONGO_DATABASE_NAME)
+from tornad.database import *
 
 def create_url(url, get_parameters):
     url += "?"
@@ -17,12 +9,12 @@ def create_url(url, get_parameters):
     return url[:-1]
 
 def parse_xml(data):
-    xml_parsed = ET.parse("test.xml")
-    i = 0
-    for child in xml_parsed.getroot():
-    #xml_parsed = ET.XML(data)
-    #import pdb;pdb.set_trace()
-    #for child in xml_parsed:
+    if USE_LOCAL_XML:
+        xml_parsed = ET.parse("tornad/data/example_trip_data.xml").getroot()
+    else:
+        xml_parsed = ET.XML(data)
+
+    for child in xml_parsed:
         dictionary = {}
         dictionary['total_price'] = int(child.find("total-price").text)
         dictionary['currency'] = child.find("currency").text
@@ -92,49 +84,3 @@ def parse_xml(data):
         #        dictionary['_id'] = toHex("".join([child.find("outbound/departure-when").text, child.find("outbound/flightnumbers").text]))
         #import pdb;pdb.set_trace()
         db.trip.trips.insert(dictionary)
-        i += 1
-    print i
-
-class MainHandler(tornado.web.RequestHandler):
-    def set_default_headers(self):
-        self.set_header("Access-Control-Allow-Origin", "*")
-        self.set_header("Access-Control-Allow-Methods", "".join(['POST','GET','OPTIONS', 'PUT', 'DELETE']))
-    
-    @tornado.web.asynchronous
-    def get(self):
-        print self.request.arguments
-        http = httpclient.AsyncHTTPClient()
-        """
-        http.fetch(create_url("http://www.ticket.se/internal/cache/search/air",{"tripType":"ROUNDTRIP", "departureIata":"CPH", "arrivalIata":"NCE", "departureDate":"2012-11-01", "returnDate":"2012-11-06", "ticketType":"ECONOMY", "adults":"1", "children":"0", "infants":"0", "source":"zanox"}),
-                   callback=self.on_response)
-        """
-        self.on_response("asd")
-    def on_response(self, response):
-        # TODO: Should LOG this
-        #if response.error:
-        #    raise tornado.web.HTTPError(500)
-
-        #parse_xml(response.body)
-        parse_xml(response)
-        self.on_parsing_done()
-
-    def on_parsing_done(self):
-        data = db.trip.trips.find().sort('total_price',1)
-        data = list(data)
-        for d in data:
-            if '_id' in d:
-                d['_id'] = str(d['_id'])
-                
-        self.write(json.dumps(data))
-        self.finish()
-        #db.trip.trips.remove()
-
-
-application = tornado.web.Application([
-    (r"/", MainHandler),
-], debug=True)
-
-if __name__ == "__main__":
-    print "Reload"
-    application.listen(8888)
-    tornado.ioloop.IOLoop.instance().start()

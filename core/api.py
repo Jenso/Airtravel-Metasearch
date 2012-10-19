@@ -14,7 +14,7 @@ class Trip(mongoengine.Document):
     inbound = mongoengine.DictField()
     total_price = mongoengine.StringField(db_field="total-price")
     deeplink = mongoengine.StringField()
-    
+
 class DocumentResource(resources.MongoEngineResource):
     class Meta:
         queryset = Trip.objects.order_by('total-price')
@@ -24,10 +24,38 @@ class DocumentResource(resources.MongoEngineResource):
         resource_name = "trips"
 
 
-from external_apis.models import Airports
+from core.models import Airports
 from tastypie.resources import ModelResource
+from django.db.models import Q
 
 class AirportResource(ModelResource):
+    def build_filters(self, filters=None):
+        if filters is None:
+            filters = {}
+        orm_filters = super(AirportResource, self).build_filters(filters)
+
+        if('custom_query' in filters):
+            query = filters['custom_query']
+            qset = (
+                Q(iata__istartswith=query) |
+                Q(airport_name__istartswith=query) |
+                Q(city__istartswith=query) |
+                Q(country__istartswith=query)
+                )
+            orm_filters.update({'custom': qset})
+
+        return orm_filters
+
+    def apply_filters(self, request, applicable_filters):
+        if 'custom' in applicable_filters:
+            custom = applicable_filters.pop('custom')
+        else:
+            custom = None
+
+        semi_filtered = super(AirportResource, self).apply_filters(request, applicable_filters)
+
+        return semi_filtered.filter(custom) if custom else semi_filtered
+    
     class Meta:
         resource_name = 'airports'
         queryset = Airports.objects.all()
