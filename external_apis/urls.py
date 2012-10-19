@@ -1,12 +1,13 @@
 from django.conf.urls import patterns, include, url
 
 from tastypie.api import Api
-from external_apis.api import DocumentResource
+from external_apis.api import AirportResource
 
-profile_api = Api(api_name='trips')
-profile_api.register(DocumentResource())
+general_api = Api(api_name='general')
+general_api.register(AirportResource())
+
 
 urlpatterns = patterns('',
     (r'^api/',
-            include(profile_api.urls)),
+            include(general_api.urls)),
 )

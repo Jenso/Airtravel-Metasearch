@@ -30,6 +30,17 @@ var TripsCollection = Backbone.Collection.extend({
     model: Trip,
 });
 
+var AirportsCollection = Backbone.Tastypie.Collection.extend({
+    url: AIRPORTS_API_URL,
+});
+
+var AirportView = Backbone.Marionette.ItemView.extend({
+});
+
+var AirportSearchView = Backbone.Marionette.CompositeView.extend({
+    itemView: AirportView,
+});
+
 var TripView = Backbone.Marionette.ItemView.extend({
     template: "#tpl-trip",
     className: "trip",
@@ -89,7 +100,12 @@ var SearchView = Backbone.Marionette.ItemView.extend({
     //itemView: PinView,
     template: "#tpl-search-area",
     initialize: function() {
-
+	this.airportsCollection = new AirportsCollection();
+	this.airportsCollection.fetch({
+	    success: function(res) {
+		console.log(res);
+	    }
+	})
     },
     onRender: function () {
         $.datepicker.regional['sv'] = {
@@ -124,9 +140,13 @@ var SearchView = Backbone.Marionette.ItemView.extend({
                                                     }
 
                                                    });
+	this.initQuickselect();
     },
     events: {
         'click #search-trip': 'searchTrip',
+    },
+    initQuickselect: function() {
+	this.$('input#from').quickselect({data: ['option1', 'option2', 'option3']});
     },
     searchTrip: function() {
 	if(this.$('#trip-type').attr('checked')) {

@@ -8,7 +8,7 @@
 </style>
 <!-- Underscore.js Templates -->
 <script>
-TRIPS_API_URL = "{% url 'api_dispatch_list' api_name="trips" resource_name="trips" %}";
+AIRPORTS_API_URL = "{% url 'api_dispatch_list' api_name="general" resource_name="airports" %}";
 </script>
 
 <script type="text/template" id="tpl-search-area">
@@ -19,12 +19,12 @@ TRIPS_API_URL = "{% url 'api_dispatch_list' api_name="trips" resource_name="trip
 				  
 				  <div class="pull-left">
 					  <label>Från:</label>
-					  <input  type="text" >
+					  <input id="from" type="text">
 				  </div>
 				  
 				  <div class="pull-left right-one">
 				  	 <label>Till:</label>
-				  	 <input  type="text" >
+				  	 <input id="to" type="text" >
 				  </div>
 				  
 			</div>

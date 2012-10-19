@@ -22,3 +22,16 @@ class DocumentResource(resources.MongoEngineResource):
         authorization = authorization.Authorization()
         #collection = "test_collection" # collection name
         resource_name = "trips"
+
+
+from external_apis.models import Airports
+from tastypie.resources import ModelResource
+
+class AirportResource(ModelResource):
+    class Meta:
+        resource_name = 'airports'
+        queryset = Airports.objects.all()
+        #excludes = ['user']
+        allowed_methods = ['get']
+        limit = 50
+        #max_limit = 0

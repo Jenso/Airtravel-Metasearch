@@ -2,7 +2,7 @@ DEVELOPMENT = True
 DEBUG = TEMPLATE_DEBUG = THUMBNAIL_DEBUG = True
 
 MIDDLEWARE_CLASSES = (
-    'extras.django-crossdomainxhr-middleware.XsSharing',
+    'core.django-crossdomainxhr-middleware.XsSharing',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
