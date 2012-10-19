@@ -21,7 +21,7 @@ class TripsHandler(BaseHandler):
     @tornado.web.asynchronous
     def get(self):
         print self.request.arguments
-        print test
+        #print test
         if not USE_LOCAL_XML:
             http = httpclient.AsyncHTTPClient()
 

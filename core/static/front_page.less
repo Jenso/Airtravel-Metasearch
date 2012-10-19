@@ -16,26 +16,45 @@
 
 
 	box-shadow: #7E7E7E 0px 6px 6px 0px;
-	height:350px;
+	height:380px;
 	padding-top:10px;
 	.border-radius(5px);	
 	
+	h1{
+		font-size:18px;
+	}
+	
 	.search-boxes-destination, .search-boxes-date{
-		width:425px;
+		width:606px;
 	}
 	
 	.search-boxes-destination{
 		display:block;
 		margin-bottom:20px;
-		margin-left:3px;
-		.right-one{
-			margin-left:15px;
+			
+		.departure-options{
+			margin-left:0px;
+		}
+		.arrival-options{
+		
 			
 		}
-	}
-	
-	
-	.search-boxes-date{
+		
+		.arrival-options, .departure-options{
+			width:300px;
+			display:inline-block;
+			padding-right:0px;
+			label{
+				font-size:15px;
+			}
+			input{
+				float:left;
+				width:290px;
+				height:30px;
+				font-size:15px;
+			}
+		}
+			
 		#datepicker-arrival{
 			float:left;
 		}
@@ -44,6 +63,8 @@
 			margin-left:10px;
 		}
 	}
+	
+
 	
 	.search-boxes-additional-info{
 		height:200px;
@@ -67,11 +88,13 @@
 		font-size: 14px;
 	}
 	
-	input{
+	/*
+input{
 			padding:20px 10px 20px 10px;
 			font-size:18px;
 			width:201px;
 		}
+*/
 
 	.btn{
 		display:block;
@@ -96,6 +119,17 @@
 		margin-top:10px;
 		xbackground-color:green;
 		.border-radius(5px);
+	}
+	
+	.wrong-input{
+		border-color:red;
+		    box-shadow: 0 0 5px rgba(0, 0, 255, 1);
+		    -webkit-box-shadow: 0 0 5px rgba(0, 0, 255, 1); 
+		    -moz-box-shadow: 0 0 5px rgba(0, 0, 255, 1); 
+	}
+	
+	input{
+		padding-right:0px;
 	}
 	
 }
