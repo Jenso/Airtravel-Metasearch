@@ -49,7 +49,7 @@ var TripView = Backbone.Marionette.ItemView.extend({
         'click': 'tripOverlay',
     },
     tripOverlay: function() {
-        //OPEN ME!
+        console.log(this.model);
     },
     parseDate: function(str) {
         //YYYYmmdd or YYYY-mm-dd
@@ -116,7 +116,7 @@ var SearchView = Backbone.Marionette.ItemView.extend({
             dayNamesShort: ['Sön','Mån','Tis','Ons','Tor','Fre','Lör'],
             dayNames: ['Söndag','Måndag','Tisdag','Onsdag','Torsdag','Fredag','Lördag'],
             dayNamesMin: ['Sö','Må','Ti','On','To','Fr','Lö'],
-            weekHeader: '',
+            weekHeader: 'v',
             dateFormat: 'yy-mm-dd',
             firstDay: 1,
             isRTL: false,
