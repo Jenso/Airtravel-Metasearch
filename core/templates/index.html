@@ -26,6 +26,13 @@ AIRPORTS_API_URL = "{% url 'api_dispatch_list' api_name="general" resource_name=
  	</div>
 </script>
 
+
+<script type="text/template" id="tpl-overlay">
+	
+	<div class="modal fade in" id="overlay-modal">hej</div>
+	
+</script>
+
 <script type="text/template" id="tpl-search-area">
 	<div id="first-page" class="general-design" >
 		
@@ -130,7 +137,7 @@ AIRPORTS_API_URL = "{% url 'api_dispatch_list' api_name="general" resource_name=
 	<img src="{{ STATIC_URL }}images/utresa.png"/>Utresa
       </span>
       <div>
-	  <img style="height:40px;width:40px;" src="{{ STATIC_URL }}images/airlines/sas.jpg" />
+	  <img style="height:40px;width:40px;" src="{{ STATIC_URL }}images/airlines/sas.png" />
 	  <span><%= outbound_departure_time %> <%= outbound['departure-where-name'] %> - <%= outbound_arrival_time %> <%= outbound['arrival-where-name'] %>
 	    <span class="arrival-time-travel">Restid: 
 	      <span class="time">7h 15min</span> 
@@ -175,7 +182,7 @@ AIRPORTS_API_URL = "{% url 'api_dispatch_list' api_name="general" resource_name=
       <div class="lowest-price">
       	<span><%= total_price %> kr</span>
       	
-      	<a href="<%= deeplink %>" class="btn btn-large btn-warning">Gå till resa</a>
+      	<a href="<%= deeplink %>" class="btn btn-large btn-warning" target="_blank" >Gå till resa</a>
    
 	</div>
     </div>
@@ -187,6 +194,7 @@ AIRPORTS_API_URL = "{% url 'api_dispatch_list' api_name="general" resource_name=
       </div>
       <% }); %>
     </div>
+    <div class="modal-container"></div>
   </div>
 </script>
 

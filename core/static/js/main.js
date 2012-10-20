@@ -41,6 +41,21 @@ var AirportSearchView = Backbone.Marionette.CompositeView.extend({
     itemView: AirportView,
 });
 
+var OverlayView = Backbone.View.extend({
+	el: $('body'),
+    template: _.template($("#tpl-overlay").html()),
+    className: "trip-overlay",
+    tagName: "div",
+    initialize: function() {
+    },
+    render:function (eventName) {
+		$(this.el).append(this.template(this.model.toJSON()));
+    	return this;
+	},
+    
+
+});    
+
 var TripView = Backbone.Marionette.ItemView.extend({
     template: "#tpl-trip",
     className: "trip",
@@ -55,7 +70,7 @@ var TripView = Backbone.Marionette.ItemView.extend({
         'click': 'tripOverlay',
     },
     tripOverlay: function() {
-        console.log(this.model);
+        new OverlayView({model: this.model, el: this.$('.modal-container')}).render();
     },
     parseDate: function(str) {
         //YYYYmmdd or YYYY-mm-dd
