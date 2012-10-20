@@ -27,6 +27,7 @@ class DocumentResource(resources.MongoEngineResource):
 from core.models import Airports
 from tastypie.resources import ModelResource
 from django.db.models import Q
+from tastypie.resources import ALL
 
 class AirportResource(ModelResource):
     def build_filters(self, filters=None):
@@ -60,6 +61,9 @@ class AirportResource(ModelResource):
         resource_name = 'airports'
         queryset = Airports.objects.all()
         #excludes = ['user']
+        filtering = {
+            'iata': ALL,
+            }
         allowed_methods = ['get']
         limit = 50
         #max_limit = 0

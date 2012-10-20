@@ -1,5 +1,6 @@
 import elementtree.ElementTree as ET
 from tornad.database import *
+import tornado, re
 
 def create_url(url, get_parameters):
     url += "?"
@@ -8,7 +9,7 @@ def create_url(url, get_parameters):
     print url
     return url[:-1]
 
-def parse_xml(data):
+def parse_xml(data, travel_agency):
     if USE_LOCAL_XML:
         xml_parsed = ET.parse("tornad/data/example_trip_data.xml").getroot()
     else:
@@ -16,16 +17,21 @@ def parse_xml(data):
 
     for child in xml_parsed:
         dictionary = {}
+        # Should be conditional
         dictionary['total_price'] = int(child.find("total-price").text)
         dictionary['currency'] = child.find("currency").text
         dictionary['deeplink'] = child.find("deeplink").text
 
+        dictionary['prices'] = [{'travel_agency': travel_agency,
+                                 'price': dictionary['total_price']}]
+        
         # outbound
         dictionary['outbound'] = {}
         outbound = dictionary['outbound']
         outbound['departure-when'] = child.find("outbound/departure-when").text
-        outbound['arrival-when'] = child.find("outbound/arrival-when").text
         outbound['departure-where-name'] = child.find("outbound/departure-where-name").text
+        outbound['departure-where-code'] = child.find("outbound/departure-where-code").text
+        outbound['arrival-when'] = child.find("outbound/arrival-when").text
         outbound['arrival-where-name'] = child.find("outbound/arrival-where-name").text
         outbound['arrival-where-code'] = child.find("outbound/arrival-where-code").text
         outbound['stops'] = child.find("outbound/stops").text
@@ -54,8 +60,9 @@ def parse_xml(data):
         dictionary['inbound'] = {}
         inbound = dictionary['inbound']
         inbound['departure-when'] = child.find("inbound/departure-when").text
-        inbound['arrival-when'] = child.find("inbound/arrival-when").text
         inbound['departure-where-name'] = child.find("inbound/departure-where-name").text
+        inbound['departure-where-code'] = child.find("inbound/departure-where-code").text
+        inbound['arrival-when'] = child.find("inbound/arrival-when").text
         inbound['arrival-where-name'] = child.find("inbound/arrival-where-name").text
         inbound['arrival-where-code'] = child.find("inbound/arrival-where-code").text
         inbound['stops'] = child.find("inbound/stops").text
@@ -84,3 +91,48 @@ def parse_xml(data):
         #        dictionary['_id'] = toHex("".join([child.find("outbound/departure-when").text, child.find("outbound/flightnumbers").text]))
         #import pdb;pdb.set_trace()
         db.trip.trips.insert(dictionary)
+
+def validate_get_params(parameters):
+    #import pdb;pdb.set_trace()
+    # Should log all these too
+    validated_parameters = {}
+    expected_parameters = ['tripType', 'departureIata', 'arrivalIata', 'departureDate',
+                           'returnDate', 'ticketType', 'adults', 'children', 'infants']
+
+    for parameter in expected_parameters:
+        if not parameters(parameter):
+            raise tornado.web.HTTPError(400, "Parameter not found: " + parameter)
+
+    print parameters
+    if not parameters('tripType') in ['ROUNDTRIP', 'ONEWAY']:
+        raise tornado.web.HTTPError(400, "Bad parameters")
+    validated_parameters['tripType'] = parameters('tripType')
+    
+    if not parameters('ticketType') in ['ECONOMY', 'BUSSINESS']:
+        raise tornado.web.HTTPError(400, "Bad parameters")
+    validated_parameters['ticketType'] = parameters('ticketType')
+
+    for iata_name in ['arrivalIata', 'departureIata']:
+        iata_val = parameters(iata_name)
+        if not len(iata_val) == 3 or not len(re.findall("[A-Z]", iata_val)) == 3:
+            raise tornado.web.HTTPError(400, "Bad parameters")
+        validated_parameters[iata_name] = iata_val
+
+    for date_param in ['departureDate', 'returnDate']:
+        if not re.match("201[2-9]-[01]\d-[0123]\d", parameters(date_param)):
+            raise tornado.web.HTTPError(400, "Bad parameters")
+        validated_parameters[date_param] = parameters(date_param)
+
+    for param_name in ['adults', 'children', 'infants']:
+        try:
+            param_int = int(parameters(param_name))
+        except ValueError:
+            raise tornado.web.HTTPError(400, "Bad parameters")
+
+        if param_int < 0 or param_int > 10:
+            raise tornado.web.HTTPError(400, "Bad parameters")
+        
+        validated_parameters[param_name] = parameters(param_name)
+
+    return validated_parameters
+         

@@ -45,6 +45,12 @@ var TripView = Backbone.Marionette.ItemView.extend({
     template: "#tpl-trip",
     className: "trip",
     tagName: "li",
+    onBeforeRender: function(){
+	// sort agency prices array before render
+	this.model.set('prices',this.model.get('prices').sort(function(a,b){
+	    return b.price - a.price;
+	}));
+    },
     events: {
         'click': 'tripOverlay',
     },
@@ -99,10 +105,7 @@ var SearchView = Backbone.Marionette.ItemView.extend({
     template: "#tpl-search-area",
     initialize: function() {
 	//_.bindAll(this, 'getQuickselectData');
-	this.airportsCollection = new AirportsCollection();
     },
-    
-    
     onRender: function () {
         $.datepicker.regional['sv'] = {
             closeText: 'Stäng',
@@ -155,7 +158,10 @@ var SearchView = Backbone.Marionette.ItemView.extend({
 	this.$('input#to').quickselect(options);
     },
     extractIata: function(str) {
-	return str.split(",")[1];
+	function trim(str) {
+	    return str.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+	}
+	return trim(str.split(",")[1]);
     },
     
     testNaN: function(parsedDate1, parsedDate2){
@@ -246,10 +252,23 @@ Travel.addInitializer(function(options){
 
     MyRouter = Backbone.Marionette.AppRouter.extend({
         routes : {
-            "sök" : "search",
+            "test-search" : "search",
             "*actions": "defaultRoute",
         },
         search: function() {
+	    var test_data =  {
+                'tripType':'ROUNDTRIP',
+                'departureIata': 'CPH',
+                'arrivalIata': 'NCE',
+                "departureDate":"2012-11-01",
+                "returnDate":"2012-11-06",
+                "ticketType":"ECONOMY",
+                "adults":"1",
+                "children":"0",
+                "infants":"0",
+            };
+
+	    Travel.vent.trigger("search:start", test_data);
 
         },
         defaultRoute: function() {
@@ -269,17 +288,15 @@ Travel.addInitializer(function(options){
 	Travel.mainRegion.show(new WaitingSearchView());
 
 	var trips = new TripsCollection();
-	var test_data =  {
-                'tripType':'ROUNDTRIP',
-                'departureIata': 'CPH',
-                'arrivalIata': 'NCE',
-                "departureDate":"2012-11-01",
-                "returnDate":"2012-11-06",
-                "ticketType":"ECONOMY",
-                "adults":"1",
-                "children":"0",
-                "infants":"0",
-            };
+
+	$.ajax({
+	    url: AIRPORTS_API_URL,
+	    //data: "iata__in=" + searchTerm.departureIata + "&iata__in=" + searchTerm.arrivalIata,
+	    data: "iata__in=" + "ARN" + "&iata__in=" + "JFK",
+            success: function (response) {
+		console.log("rrr",response);
+            }
+	});
 
         trips.fetch({
 	    data: searchTerm,
