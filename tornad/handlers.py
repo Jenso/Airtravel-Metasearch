@@ -42,7 +42,7 @@ class TripsHandler(BaseHandler):
         self.on_parsing_done()
 
     def on_parsing_done(self):
-        data = db.trip.trips.find().sort('total_price',1)
+        data = db.trip.trips.find().sort('total_price',1).limit(RESULT_LIMIT)
         data = list(data)
         for d in data:
             if '_id' in d:

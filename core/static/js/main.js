@@ -60,11 +60,15 @@ var TripView = Backbone.Marionette.ItemView.extend({
     template: "#tpl-trip",
     className: "trip",
     tagName: "li",
+    initialize: function() {
+	this.setTripTime();
+    },
     onBeforeRender: function(){
 	// sort agency prices array before render
 	this.model.set('prices',this.model.get('prices').sort(function(a,b){
 	    return b.price - a.price;
 	}));
+
     },
     events: {
         'click': 'tripOverlay',
@@ -72,27 +76,92 @@ var TripView = Backbone.Marionette.ItemView.extend({
     tripOverlay: function() {
         new OverlayView({model: this.model, el: this.$('.modal-container')}).render();
     },
-    parseDate: function(str) {
-        //YYYYmmdd or YYYY-mm-dd
+    parseDate: function(date, timezone) {
+	// parse date and convert from specified timezone to local timezone
+	var parts = date.match(/(\d+)/g);
+	var parsed_date = new Date(Date.parse(parts[0] + " " + parts[1] + " " + parts[2] + " " + parts[3] + ":" + parts[4] + " GMT" + timezone));
+	console.log("wuut", parsed_date, parts, timezone);
+	return parsed_date;
+    },
+    formatHoursMinutes: function(minutes) {
+	// Minutes => hours and minutes
 
-        // remove all non digits
-        str = str.replace(/\D/g,'');
-        var y = str.substr(0,4),
-        m = str.substr(4,2) - 1,
-        d = str.substr(6,2);
-        var D = new Date(y,m,d);
-        return (D.getFullYear() == y && D.getMonth() == m && D.getDate() == d) ? D : 'invalid date';
+	if(minutes > 60) {
+	    return {hours: Math.floor(minutes / 60), minutes: minutes % 60}
+	} else {
+	    return {hours: null, minutes: minutes}
+	}
+    },
+    calculateTripTime: function(start, end) {
+	start = this.parseDate(start, this.options.departureTimezone)
+	end = this.parseDate(end, this.options.arrivalTimezone)
+	var milliseconds_between = end.getTime() - start.getTime();
+	var minutes_between = (milliseconds_between / 1000) / 60;
+	return this.formatHoursMinutes(minutes_between);
+    },
+    setTripTime: function() {
+	var outbound = this.model.get("outbound");
+	var outbound_departure = outbound['departure-when'];
+	var outbound_arrival = outbound['arrival-when'];
+
+	var inbound = this.model.get("inbound");
+	var inbound_departure = inbound['departure-when'];
+	var inbound_arrival = inbound['arrival-when'];
+	this.model.set({
+	    outboundTripTime: this.calculateTripTime(outbound_departure, outbound_arrival),
+	    inboundTripTime: this.calculateTripTime(inbound_departure, inbound_arrival)
+	}, {silent: true});
+
     },
 
 });
 
-
 var TripsView = Backbone.Marionette.CompositeView.extend({
     itemView: TripView,
+    itemViewOptions: function() {
+	return {
+	    departureTimezone: this.departureTimezone,
+	    arrivalTimezone: this.arrivalTimezone
+	};
+    },
     template: "#tpl-trips",
     tagName: "div",
     className: "search-result-list",
     initialize: function() {
+	this.searchTerm = this.options.searchTerm;
+	this.initTimezoneData();
+	this.initCollection();
+    },
+    initCollection: function() {
+	var _this = this;
+	this.collection = new TripsCollection();
+	this.collection.fetch({
+	    data: this.searchTerm,
+	    // since we trigger an event on success, that in turn trigger a render of this view.
+	    // we dont want to trigger a rendering of the view when the collection is fetched
+	    silent:true, 
+            success: function(collection, response) {
+		Travel.vent.trigger("search:tripsloaded", _this)
+            }
+        });
+    },
+    initTimezoneData: function() {
+	// TODO: If TripsCollection query is done before this request, we have a problem -> FIX!
+	var _this = this;
+	$.ajax({
+	    url: AIRPORTS_API_URL,
+	    data: "iata__in=" + _this.searchTerm.departureIata + "&iata__in=" + _this.searchTerm.arrivalIata,
+            success: function (response) {
+		// timezone's are in GMT+XXXX (example: GMT+0100)
+		var objects = response.objects;
+		
+		_this.departureTimezone = objects[0].timezone;
+		_this.arrivalTimezone = objects[1].timezone;
+		console.log(_this.departureTimezone, objects[1].timezone, response);
+
+            }
+	});
+
     },
     appendHtml: function(collectionView, itemView, index){
         collectionView.$el.find("#search-results").append(itemView.el);
@@ -149,17 +218,13 @@ var SearchView = Backbone.Marionette.ItemView.extend({
         $.datepicker.setDefaults($.datepicker.regional['sv']);
         var _this = this;
         this.$("#datepicker-departure-date").datepicker({firstDay: 1,
-        											onSelect: function(dateText, inst){
-	        											_this.departureDateFromDatepicker =  dateText;
-        											}
-        											
-        											});
+							 onSelect: function(dateText, inst){
+	        					     _this.departureDateFromDatepicker =  dateText;
+        						 }});
         this.$("#datepicker-return-date").datepicker({firstDay: 1,
-                                                    onSelect: function(dateText, inst) {
-                                                    	_this.arrivalDateFromDatepicker = dateText;
-                                                    }
-
-                                                   });
+                                                      onSelect: function(dateText, inst) {
+                                                    	  _this.arrivalDateFromDatepicker = dateText;
+                                                      }});
 	this.initQuickselect();
     },
     events: {
@@ -167,7 +232,7 @@ var SearchView = Backbone.Marionette.ItemView.extend({
         'click #trip-type' : 'hideArrivalDate' 
     },
     initQuickselect: function() {
-	//this.$('input#from').quickselect({data: ['option1', 'option2', 'option3']});
+	// tell where QuickSelect should get the Airport data
 	var options = {ajax: "http://localhost:8888/airports/", minChars: 2};
 	this.$('input#from').quickselect(options);
 	this.$('input#to').quickselect(options);
@@ -273,8 +338,8 @@ Travel.addInitializer(function(options){
         search: function() {
 	    var test_data =  {
                 'tripType':'ROUNDTRIP',
-                'departureIata': 'CPH',
-                'arrivalIata': 'NCE',
+                'departureIata': 'ARN',
+                'arrivalIata': 'AMS',
                 "departureDate":"2012-11-01",
                 "returnDate":"2012-11-06",
                 "ticketType":"ECONOMY",
@@ -298,36 +363,19 @@ Travel.addInitializer(function(options){
         },
     });
 
-
     Travel.vent.on("search:start", function(searchTerm){
 	Travel.mainRegion.show(new WaitingSearchView());
+	//Backbone.history.navigate("search/" + searchTerm);
 
-	var trips = new TripsCollection();
+	// An event will be triggered when TripsView have loaded everything
+	// and set mainRegion.show on it
+	var not_used = new TripsView({searchTerm: searchTerm});
+    });
 
-	$.ajax({
-	    url: AIRPORTS_API_URL,
-	    //data: "iata__in=" + searchTerm.departureIata + "&iata__in=" + searchTerm.arrivalIata,
-	    data: "iata__in=" + "ARN" + "&iata__in=" + "JFK",
-            success: function (response) {
-		console.log("rrr",response);
-            }
-	});
-
-        trips.fetch({
-	    data: searchTerm,
-            success: function(collection, response) {
-		Travel.mainRegion.show(
-		    new TripsView({
-			collection: collection,
-		    })
-		);
-
-                console.log("ho", collection, response);
-            }
-        });
-
-        //Backbone.history.navigate("search/" + searchTerm);
-        console.log(searchTerm);
+    
+    Travel.vent.on("search:tripsloaded", function(tripsViewObj) {
+	// searchQuery against travel agencies done, now show them
+	Travel.mainRegion.show(tripsViewObj);
     });
 
     var app_router = new MyRouter();

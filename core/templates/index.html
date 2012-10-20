@@ -140,7 +140,13 @@ AIRPORTS_API_URL = "{% url 'api_dispatch_list' api_name="general" resource_name=
 	  <img style="height:40px;width:40px;" src="{{ STATIC_URL }}images/airlines/sas.png" />
 	  <span><%= outbound_departure_time %> <%= outbound['departure-where-name'] %> - <%= outbound_arrival_time %> <%= outbound['arrival-where-name'] %>
 	    <span class="arrival-time-travel">Restid: 
-	      <span class="time">7h 15min</span> 
+	      <span class="time">
+		<% if(outboundTripTime.hours) { %>
+		<%= outboundTripTime.hours %>h <%= outboundTripTime.minutes %>min
+		<% } else { %>
+		<%= outboundTripTime.minutes %>min
+		<% } %>
+	      </span> 
 	      <span style="color:green;display:inline;">
 		<% if(inbound['stops'] == "0") { %>
 		(Direktflyg)
@@ -163,7 +169,13 @@ AIRPORTS_API_URL = "{% url 'api_dispatch_list' api_name="general" resource_name=
 	<img  style="height:40px;width:40px;" src="{{ STATIC_URL }}images/airlines/klm.png" />
 	<span><%= inbound_departure_time %> <%= inbound['departure-where-name'] %> - <%= inbound_arrival_time %> <%= inbound['arrival-where-name'] %>
 	  <span class="departure-time-travel">Restid: 
-	    <span class="time">12h 15min</span> 
+	    <span class="time">
+	      <% if(inboundTripTime.hours) { %>
+	      <%= inboundTripTime.hours %>h <%= inboundTripTime.minutes %>min
+	      <% } else { %>
+	      <%= inboundTripTime.minutes %>min
+	      <% } %>      
+	    </span> 
 	    <% if(inbound['stops'] == "0") { %>
 	    (Direktflyg)
 	    <% } else if(inbound['stops'] == "1") { %>
