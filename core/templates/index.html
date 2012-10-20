@@ -12,11 +12,22 @@ AIRPORTS_API_URL = "{% url 'api_dispatch_list' api_name="general" resource_name=
 </script>
 
 <script type="text/template" id="tpl-waiting-search">
-  <h1>LADDAR!</h1>
+  
+ 	<div class="general-design" id="loading-page">
+ 	
+ 		<h1>Sökning pågår!</h1>
+ 		
+ 		<p>Vi söker just nu igenom nätets olika resebyråer för att hitta just rätt resa för dig. Sökningen tar ungefär 20sekunder.</p>
+ 		
+ 		<div class="progress progress-striped active" style="width:500px;">
+	 			<div class="bar" id="current-progress-bar" style="width: 5%;"></div>
+  		</div>
+ 	
+ 	</div>
 </script>
 
 <script type="text/template" id="tpl-search-area">
-	<div id="first-page">
+	<div id="first-page" class="general-design" >
 		
 		<div class="span">
 			<h1>Sök efter de bästa flygbiljetterna bland nätets resebyråer</h1>

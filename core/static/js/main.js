@@ -79,7 +79,19 @@ var TripsView = Backbone.Marionette.CompositeView.extend({
 });
 
 var WaitingSearchView = Backbone.Marionette.ItemView.extend({
-    template: "#tpl-waiting-search"
+    template: "#tpl-waiting-search",
+    
+    onRender: function(){
+    	setInterval(this.loadTheBar,1);
+    },
+    
+    
+    loadTheBar: function(){
+    	widthNumber = this.$('#current-progress-bar').width();
+    	widthNumber = widthNumber + 30;
+    	this.$('#current-progress-bar').width(widthNumber);
+    }
+    
 });
 
 var SearchView = Backbone.Marionette.ItemView.extend({
@@ -239,9 +251,11 @@ Travel.addInitializer(function(options){
         },
         search: function() {
 
-
         },
         defaultRoute: function() {
+        
+        
+        
             //var collection = new PinsPagerCollection();
             var SearchView1 = new SearchView();
 
