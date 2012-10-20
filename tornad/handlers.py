@@ -2,7 +2,7 @@ import tornado.ioloop
 import tornado.web
 from tornado import httpclient
 import json
-from tornad.tools import parse_xml, create_url
+from tornad.tools import parse_xml, create_url, validate_get_params
 from tornad.database import *
 
 #django imports
@@ -20,12 +20,11 @@ class TripsHandler(BaseHandler):
    
     @tornado.web.asynchronous
     def get(self):
-        print self.request.arguments
-        #print test
         if not USE_LOCAL_XML:
             http = httpclient.AsyncHTTPClient()
-
-            http.fetch(create_url("http://www.ticket.se/internal/cache/search/air",{"tripType":"ROUNDTRIP", "departureIata":"CPH", "arrivalIata":"NCE", "departureDate":"2012-11-01", "returnDate":"2012-11-06", "ticketType":"ECONOMY", "adults":"1", "children":"0", "infants":"0", "source":"zanox"}),
+            validated_parameters = validate_get_params(self.get_argument)
+            validated_parameters['source'] = 'zanox'
+            http.fetch(create_url("http://www.ticket.se/internal/cache/search/air", validated_parameters),
                        callback=self.on_response)
         else:
             self.on_response("fake-response")
@@ -36,10 +35,10 @@ class TripsHandler(BaseHandler):
             # TODO: Should LOG this
             if response.error:
                 raise tornado.web.HTTPError(500)
-            parse_xml(response.body)
+            parse_xml(response.body, "ticket_se")
         else:
-             parse_xml(response)
-             
+             parse_xml(response, "ticket_se")
+
         self.on_parsing_done()
 
     def on_parsing_done(self):

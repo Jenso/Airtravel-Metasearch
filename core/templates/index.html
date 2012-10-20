@@ -179,48 +179,14 @@ AIRPORTS_API_URL = "{% url 'api_dispatch_list' api_name="general" resource_name=
    
 	</div>
     </div>
-  <div class="bottom">
-    <div class="agency">
-      <img src="{{ STATIC_URL }}images/travel-agencies/ticket_se.gif"/>
-      <div><span>1 500 kr</span></div>
+    <div class="bottom">
+      <% _.each(prices, function(agency) { %>
+      <div class="agency">
+	<img src="{{ STATIC_URL }}images/travel-agencies/<%= agency.travel_agency %>.gif"/>
+	<div><span><%= agency.price %> kr</span></div>
+      </div>
+      <% }); %>
     </div>
-        <div class="agency">
-      <img src="{{ STATIC_URL }}images/travel-agencies/ticket_se.gif"/>
-      <div><span>1 500 kr</span></div>
-    </div>
-    <div class="agency">
-      <img src="{{ STATIC_URL }}images/travel-agencies/ticket_se.gif"/>
-      <div><span>1 500 kr</span></div>
-    </div>
-    <div class="agency">
-      <img src="{{ STATIC_URL }}images/travel-agencies/ticket_se.gif"/>
-      <div><span>1 500 kr</span></div>
-    </div>
-    <div class="agency">
-      <img src="{{ STATIC_URL }}images/travel-agencies/ticket_se.gif"/>
-      <div><span>1 500 kr</span></div>
-    </div>
-    <div class="agency">
-      <img src="{{ STATIC_URL }}images/travel-agencies/ticket_se.gif"/>
-      <div><span>1 500 kr</span></div>
-    </div>
-    <div class="agency">
-      <img src="{{ STATIC_URL }}images/travel-agencies/ticket_se.gif"/>
-      <div><span>1 500 kr</span></div>
-    </div>
-    <div class="agency">
-      <img src="{{ STATIC_URL }}images/travel-agencies/ticket_se.gif"/>
-      <div><span>1 500 kr</span></div>
-    </div>
-    <div class="agency">
-      <img src="{{ STATIC_URL }}images/travel-agencies/ticket_se.gif"/>
-      <div><span>1 500 kr</span></div>
-    </div>
-    <div class="cheapest-agency">
-      <img src="{{ STATIC_URL }}images/travel-agencies/ticket_se.gif"/>
-      <div><span>14 999 kr</span></div>
-    </div>
-  </div>
   </div>
 </script>
 
