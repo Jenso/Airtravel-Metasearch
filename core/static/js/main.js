@@ -46,6 +46,9 @@ var OverlayView = Backbone.View.extend({
     template: _.template($("#tpl-overlay").html()),
     className: "trip-overlay",
     tagName: "div",
+    events: {
+        'click #close-modal': 'closeTripOverlay',  
+    },
     weekday: [
 		"Söndag",
 		"Måndag",
@@ -65,6 +68,8 @@ var OverlayView = Backbone.View.extend({
 
     
     initialize: function(){
+    	$('#overlay-modal').modal('show');
+    
 	    dayOfOutboundDeparture = this.dayOfTravel('outbound', 'departure');
 	    dayOfOutboundArrival = this.dayOfTravel('outbound', 'arrival');
 	    dayOfInboundDeparture = this.dayOfTravel('inbound', 'departure');
@@ -76,6 +81,12 @@ var OverlayView = Backbone.View.extend({
 	    'dayOfInboundDeparture' : dayOfInboundDeparture,
 	    'dayOfInboundArrival' : dayOfInboundArrival,
 	    });
+	    
+	    var _this = this;
+	    
+	    $('#overlay-modal').on('hidden', function () {
+		    _this.destroy_view();
+		  });
     	
     },
     render:function (eventName) {
@@ -83,6 +94,22 @@ var OverlayView = Backbone.View.extend({
     	return this;
     	
 	},
+	
+    destroy_view: function() {
+	    //COMPLETELY UNBIND THE VIEW
+	    this.undelegateEvents();
+	
+	    $(this.el).removeData().unbind(); 
+	
+	    //Remove view from DOM
+	    this.$('#overlay-modal').remove();  
+	    Backbone.View.prototype.remove.call(this);
+    },
+    
+    	
+	closeTripOverlay: function(){
+		$('#overlay-modal').modal('hide');
+    },    
 
 
 
@@ -92,9 +119,6 @@ var TripView = Backbone.Marionette.ItemView.extend({
     template: "#tpl-trip",
     className: "trip",
     tagName: "li",
-    initialize: function() {
-	this.setTripTime();
-    },
     onBeforeRender: function(){
 	// sort agency prices array before render
 	this.model.set('prices',this.model.get('prices').sort(function(a,b){
@@ -134,28 +158,26 @@ var TripView = Backbone.Marionette.ItemView.extend({
     },
     
     initialize: function(){
+
    		this.model.set({
 		   		'airlineOutbound' : this.currentAirplane('outbound'),
-		});
+		}, {silent:true});
 		this.model.set({
 		   		'airlineInbound' : this.currentAirplane('inbound'),
-		});
+		}, {silent:true});
+		this.setTripTime();
 
     },
     events: {
         'click .flight-info-trigger': 'tripOverlay',
-        'click #close-modal': 'closeTripOverlay',
         
     },
     tripOverlay: function() {
         this.currentOverlay = new OverlayView({model: this.model, el: this.$('.modal-container')}).render();
-        $('#overlay-modal').modal('show');
+
     },
-	
-	closeTripOverlay: function(){
-		$('#overlay-modal').modal('hide');
-	    this.currentOverlay.remove();
-    },    
+
+
     
     currentAirplane: function(airplane){
 	   str = this.model.get(airplane).airlines;

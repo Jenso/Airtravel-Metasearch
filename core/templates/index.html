@@ -227,30 +227,30 @@ TORNADO_API_URL = "{% tornado_api_url %}";
 	<img src="{{ STATIC_URL }}images/utresa.png"/>Utresa
       </span>
       <div>
-	  <img style="height:40px;width:40px;" src="{{ STATIC_URL }}images/airlines/<%= airlineOutbound %>.jpg" />
-	  <span><%= outbound_departure_time %> <%= outbound['departure-where-name'] %> - <%= outbound_arrival_time %> <%= outbound['arrival-where-name'] %>
-	    <span class="arrival-time-travel">Restid: 
-	      <span class="time">
-		<% if(outboundTripTime.hours) { %>
-		<%= outboundTripTime.hours %>h <%= outboundTripTime.minutes %>min
-		<% } else { %>
-		<%= outboundTripTime.minutes %>min
-		<% } %>
-	      </span> 
-
-		<% if(inbound['stops'] == "0") { %>
-		<span style="color:green;display:inline;">(Direktflyg)</span>
-		<% } else if(inbound['stops'] == "1") { %>
-		(1 byte)
-		<% } else { %>
-		(<%= inbound['stops'] %> Byten)
-		<% } %>
-	      </span>
-	      <span style="display:inline;margin-left:10px;text-decoration:underline;font-size:10px;">
-		<a class="flight-info-trigger">Flight info</a>
-	      </span>
-	    </span>
-	  </span>
+		  <img style="height:40px;width:40px;" src="{{ STATIC_URL }}images/airlines/<%= airlineOutbound %>.jpg" />
+		  <span><%= outbound_departure_time %> <%= outbound['departure-where-name'] %> - <%= outbound_arrival_time %> <%= outbound['arrival-where-name'] %>
+			  <span class="arrival-time-travel">Restid: 
+				  <span class="time">
+					  <% if(outboundTripTime.hours) { %>
+					  <%= outboundTripTime.hours %>h <%= outboundTripTime.minutes %>min
+					  <% } else { %>
+					  <%= outboundTripTime.minutes %>min
+					  <% } %>
+				  </span> 
+			
+							<% if(inbound['stops'] == "0") { %>
+								<span style="color:green;display:inline;">(Direktflyg)</span>
+								<% } else if(inbound['stops'] == "1") { %>
+								(1 byte)
+								<% } else { %>
+								(<%= inbound['stops'] %> Byten)
+								<% } %>
+				      
+							      <span style="display:inline;margin-left:10px;text-decoration:underline;font-size:10px;">
+								<a class="flight-info-trigger">Flight info</a>
+							      </span>
+			  </span>
+		  </span>
 	</div>
       </div>
       <div class="departure-time">
