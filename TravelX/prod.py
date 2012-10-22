@@ -1,5 +1,3 @@
-from TravelX.settings import *
-
 DEBUG = TEMPLATE_DEBUG = THUMBNAIL_DEBUG = False
 PRODUCTION = True
 
