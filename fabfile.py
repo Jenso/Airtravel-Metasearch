@@ -72,7 +72,7 @@ def collectstatic():
 
 def compile_less():
     """ TODO: Compile all files in a folder instead """
-    virtualenv("lessc core/static/bootstrap.less core/static/style.css")
+    virtualenv("lessc core/static/bootstrap.less core/static/css/style.css")
 
 
 def backup_database():
@@ -95,7 +95,8 @@ def restart_nginx():
 
 def restart_gunicorn():
     with prefix('export PRODUCTION=true'):
-        sudo("restart travelx")
+        sudo("restart travelt")
+        sudo("restart traveld")
 
 
 def top():
