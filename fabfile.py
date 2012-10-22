@@ -72,7 +72,7 @@ def collectstatic():
 
 def compile_less():
     """ TODO: Compile all files in a folder instead """
-    virtualenv("lessc core/static/bootstrap.less core/static/css/style.css")
+    virtualenv("lessc core/static/bootstrap.less core/static/bootstrap/css/style.css")
 
 
 def backup_database():
