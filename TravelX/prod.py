@@ -1,7 +1,14 @@
-from TravelX.settings import *
-
 DEBUG = TEMPLATE_DEBUG = THUMBNAIL_DEBUG = False
 PRODUCTION = True
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'travel',                      
+        'USER': 'travel',
+        'PASSWORD': 'asdjJKJk234kklaskLKO',
+    }
+}
 
 AWS_ACCESS_KEY_ID = 'AKIAJHCGEY6XAXXOSYXA'
 AWS_SECRET_ACCESS_KEY = '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'

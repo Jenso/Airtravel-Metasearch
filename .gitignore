@@ -16,3 +16,4 @@ tramp
 *~
 build/*
 database/*
+core/static/style.css

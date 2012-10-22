@@ -17,6 +17,13 @@ def bootstrap_less():
         output = '\n'.join(output)
 
     else:
-        output = '<link charset="utf-8" rel="stylesheet" type="text/css" href="%scss/style.css">' % (settings.STATIC_URL)
+        output = '<link charset="utf-8" rel="stylesheet" type="text/css" href="%sstyle.css">' % (settings.STATIC_URL)
 
     return output
+
+@register.simple_tag
+def tornado_api_url():
+    if settings.DEVELOPMENT:
+        return 'http://localhost:8888/'
+    else:
+        return '/tornado-api/'

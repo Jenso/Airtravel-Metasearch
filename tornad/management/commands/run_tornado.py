@@ -6,5 +6,6 @@ class Command(BaseCommand):
     args = '[optional port number, or ipaddr:port]'
 
     def handle(self, addrport='', *args, **options):
-        import tornad.app
+        from tornad.app import start_tornado
+        start_tornado()
         

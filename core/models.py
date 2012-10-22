@@ -8,5 +8,5 @@ class Airports(models.Model):
     icao = models.CharField(max_length=4, blank=True)
     latitude = models.CharField(max_length=200, blank=True)
     longitude = models.CharField(max_length=200, blank=True)
-    timezone = models.FloatField(blank=True)
+    timezone = models.CharField(max_length=20, blank=True)
     dst = models.CharField(max_length=20, blank=True)    
