@@ -1,6 +1,14 @@
 from fabric.api import sudo, env, cd, run, local
 from fabric.contrib.console import confirm
+import fabric
 import datetime
+
+# enable ssh debugging
+# import logging
+# logging.basicConfig(level=logging.DEBUG)
+
+# enable better fabric debug output
+fabric.state.output['debug'] = True
 
 # production server, expects accepted ssh key on server
 try:
@@ -64,7 +72,7 @@ def collectstatic():
 
 def compile_less():
     """ TODO: Compile all files in a folder instead """
-    virtualenv("lessc core/static/bootstrap.less core/static/css/style.css")
+    virtualenv("lessc core/static/bootstrap.less core/static/style.css")
 
 
 def backup_database():
@@ -120,7 +128,7 @@ def deploy_db_change(branch='master'):
 
 def deploy(branch='master'):
     #test()
-    git_pull(branch=branch)
+    #git_pull(branch=branch)
     install_requirements()
     update_git_submodules()
     compile_less()
