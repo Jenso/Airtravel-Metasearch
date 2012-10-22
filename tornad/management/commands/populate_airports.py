@@ -34,7 +34,7 @@ class Command(BaseCommand):
 
             # only take airports with IATA-code
             iata = parts[4]
-            if not iata:
+            if not iata or len(iata) > 3:
                 continue
 
             timezone = format_timezone(parts[9])
