@@ -46,13 +46,45 @@ var OverlayView = Backbone.View.extend({
     template: _.template($("#tpl-overlay").html()),
     className: "trip-overlay",
     tagName: "div",
-    initialize: function() {
+    weekday: [
+		"Söndag",
+		"Måndag",
+		"Tisdag",
+		"Onsdag",
+		"Torsdag",
+		"Fredag",
+		"Lördag",
+		],    	
+		
+	dayOfTravel: function(when, what){
+	    	var traveldate =  this.model.get(when)[what+'-when'].substr(0, 10);
+	    	dt = new Date(traveldate).getDay();
+	    	return this.weekday[dt];
+    },
+    	
+
+    
+    initialize: function(){
+	    dayOfOutboundDeparture = this.dayOfTravel('outbound', 'departure');
+	    dayOfOutboundArrival = this.dayOfTravel('outbound', 'arrival');
+	    dayOfInboundDeparture = this.dayOfTravel('inbound', 'departure');
+	    dayOfInboundArrival = this.dayOfTravel('inbound', 'arrival');
+	    
+	    this.model.set({
+	    'dayOfOutboundDeparture' : dayOfOutboundDeparture,
+	    'dayOfOutboundArrival' : dayOfOutboundArrival,
+	    'dayOfInboundDeparture' : dayOfInboundDeparture,
+	    'dayOfInboundArrival' : dayOfInboundArrival,
+	    });
+    	
     },
     render:function (eventName) {
 		$(this.el).append(this.template(this.model.toJSON()));
     	return this;
+    	
 	},
-    
+
+
 
 });    
 
@@ -65,13 +97,75 @@ var TripView = Backbone.Marionette.ItemView.extend({
 	this.model.set('prices',this.model.get('prices').sort(function(a,b){
 	    return b.price - a.price;
 	}));
+	
+    },
+    
+    airlinePicList: {
+    	'KLM Royal Dutch Airlines' : 'klm',
+    	'Scandinavian Airlines, SAS' : 'sas',
+    	'Brussels Airlines' : 'brusselsairlines',
+    	'Swiss' : 'swiss',
+    	'Lufthansa' : 'lufthansa',
+    	'Austrian Airlines' : 'austrianairlines',
+    	'Air France' : 'airfrance',
+    	'Iberia Airlines' : 'iberiaairlines',
+    	'Turkish Airlines' : 'turkishairlines',
+    	'United Airlines' : 'unitedairlines',
+    	'British Airways' : 'britishairways',
+    	'Air Canada' : 'aircanada',
+    	'Virgin Atlantic' : 'virginatlantic',
+    	'Emirates' : 'emirates',
+    	'Delta Air Lines' : 'deltaairlines',
+    	'US Airways' : 'usairways',
+    	'Gulf Air' : 'gulfair',
+    	'China Southern Airlines' : 'chinasouthernairlines',
+    	'Air China' : 'airchina',
+    	'Aeroflot' : 'aeroflot',
+    	'American Airlines' : 'americanairlines',
+    	'Finnair' : 'finnair',
+    	'Malaysia Airlines' : 'malaysiaairlines',
+    	'Qantas' : 'qantas',
+    	'Norwegian' : 'norwegian',
+    	'Singapore Airlines' :  'singaporeairlines',
+    	'TUIfly' : 'tuifly',
+    },
+    
+    initialize: function(){
+   		this.model.set({
+		   		'airlineOutbound' : this.currentAirplane('outbound'),
+		});
+		this.model.set({
+		   		'airlineInbound' : this.currentAirplane('inbound'),
+		});
+		
     },
     events: {
-        'click': 'tripOverlay',
+        'click .flight-info-trigger': 'tripOverlay',
+        'click #close-modal': 'closeTripOverlay',
+        
     },
     tripOverlay: function() {
-        new OverlayView({model: this.model, el: this.$('.modal-container')}).render();
+        this.currentOverlay = new OverlayView({model: this.model, el: this.$('.modal-container')}).render();
+        $('#overlay-modal').modal('show');
     },
+	
+	closeTripOverlay: function(){
+		$('#overlay-modal').modal('hide');
+	    this.currentOverlay.remove();
+    },    
+    
+    currentAirplane: function(airplane){
+	   str = this.model.get(airplane).airlines;
+	   theAirlines = str.split(";");
+	   firstAirline = theAirlines[0];
+	   if(firstAirline in this.airlinePicList){
+		   		return this.airlinePicList[firstAirline];
+	   }
+	   else{
+		   		return "randomairplane";
+	   };
+    },
+    
     parseDate: function(str) {
         //YYYYmmdd or YYYY-mm-dd
 
@@ -83,6 +177,7 @@ var TripView = Backbone.Marionette.ItemView.extend({
         var D = new Date(y,m,d);
         return (D.getFullYear() == y && D.getMonth() == m && D.getDate() == d) ? D : 'invalid date';
     },
+
 
 });
 
@@ -273,7 +368,7 @@ Travel.addInitializer(function(options){
         search: function() {
 	    var test_data =  {
                 'tripType':'ROUNDTRIP',
-                'departureIata': 'CPH',
+                'departureIata': 'STO',
                 'arrivalIata': 'NCE',
                 "departureDate":"2012-11-01",
                 "returnDate":"2012-11-06",
