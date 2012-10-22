@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load url from future %}
+{% load tags %}
 {% block content %}
 <style>
   .datepicker {
@@ -9,6 +10,7 @@
 <!-- Underscore.js Templates -->
 <script>
 AIRPORTS_API_URL = "{% url 'api_dispatch_list' api_name="general" resource_name="airports" %}";
+TORNADO_API_URL = "{% tornado_api_url %}";
 </script>
 
 <script type="text/template" id="tpl-waiting-search">

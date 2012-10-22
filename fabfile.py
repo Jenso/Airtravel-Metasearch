@@ -1,5 +1,6 @@
-from fabric.api import sudo, env, cd, run, local
+from fabric.api import sudo, env, cd, run, local, prefix
 from fabric.contrib.console import confirm
+from contextlib import contextmanager
 import fabric
 import datetime
 
@@ -8,7 +9,7 @@ import datetime
 # logging.basicConfig(level=logging.DEBUG)
 
 # enable better fabric debug output
-fabric.state.output['debug'] = True
+# fabric.state.output['debug'] = True
 
 # production server, expects accepted ssh key on server
 try:
@@ -25,10 +26,8 @@ TODO: Write local deploy script with local()
 instead of current bash script.
 """
 
-
 def _cd_project_root():
     return cd(env.directory)
-
 
 def _activate():
     return sudo(env.activate, user=env.deploy_user)
@@ -94,7 +93,8 @@ def restart_nginx():
 
 
 def restart_gunicorn():
-    sudo("restart travelx")
+    with prefix('export PRODUCTION=true'):
+        sudo("restart travelx")
 
 
 def top():
@@ -128,7 +128,7 @@ def deploy_db_change(branch='master'):
 
 def deploy(branch='master'):
     #test()
-    #git_pull(branch=branch)
+    git_pull(branch=branch)
     install_requirements()
     update_git_submodules()
     compile_less()

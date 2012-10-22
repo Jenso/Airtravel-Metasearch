@@ -26,7 +26,7 @@ var Trip = Backbone.Model.extend({
 });
 
 var TripsCollection = Backbone.Collection.extend({
-    url: "http://localhost:8888",
+    url: TORNADO_API_URL,
     model: Trip,
 });
 
@@ -233,7 +233,7 @@ var SearchView = Backbone.Marionette.ItemView.extend({
     },
     initQuickselect: function() {
 	// tell where QuickSelect should get the Airport data
-	var options = {ajax: "http://localhost:8888/airports/", minChars: 2};
+	var options = {ajax: TORNADO_API_URL + "airports/", minChars: 2};
 	this.$('input#from').quickselect(options);
 	this.$('input#to').quickselect(options);
     },
