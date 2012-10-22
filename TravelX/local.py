@@ -1,3 +1,5 @@
+from TravelX.settings import PROJECT_DIR
+
 DEVELOPMENT = True
 DEBUG = TEMPLATE_DEBUG = THUMBNAIL_DEBUG = True
 
