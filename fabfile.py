@@ -66,7 +66,8 @@ def test():
 
 
 def collectstatic():
-    virtualenv("./manage.py collectstatic --noinput")
+    with prefix('export PRODUCTION=true'):
+        virtualenv("./manage.py collectstatic --noinput")
 
 
 def compile_less():
