@@ -409,7 +409,7 @@ var SearchView = Backbone.Marionette.ItemView.extend({
 */
         Travel.vent.trigger("search:start", searchParams);
         
-        console.log(dateTest);
+        //console.log(dateTest);
        /*
  if (dateTest == 0){
             console.log("begin search");
