@@ -10,3 +10,9 @@
 [submodule "core/static/js/backbone-tastypie"]
 	path = core/static/js/backbone-tastypie
 	url = https://github.com/amccloud/backbone-tastypie
+[submodule "core/static/js/backbone-eventbinder"]
+	path = core/static/js/backbone-eventbinder
+	url = git://github.com/marionettejs/backbone.eventbinder.git
+[submodule "core/static/js/backbone-wreqr"]
+	path = core/static/js/backbone-wreqr
+	url = git://github.com/marionettejs/backbone.wreqr.git
