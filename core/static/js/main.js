@@ -278,7 +278,7 @@ var SearchView = Backbone.Marionette.ItemView.extend({
     //itemView: PinView,
     template: "#tpl-search-area",
     initialize: function() {
-        //_.bindAll(this, 'getQuickselectData');
+        _.bindAll(this, 'onSelectDeparture', 'onSelectArrival');
     },
     onRender: function () {
         $.datepicker.regional['sv'] = {
@@ -308,15 +308,24 @@ var SearchView = Backbone.Marionette.ItemView.extend({
         $.datepicker.setDefaults($.datepicker.regional['sv']);
         var _this = this;
         this.$("#datepicker-departure-date").datepicker({firstDay: 1,
-                                                         onSelect: function(dateText, inst){
-                                                             _this.departureDateFromDatepicker =  dateText;
-                                                         }});
+                                                         onSelect: this.onSelectDeparture});
         this.$("#datepicker-return-date").datepicker({firstDay: 1,
-                                                      onSelect: function(dateText, inst) {
-                                                          _this.arrivalDateFromDatepicker = dateText;
-                                                      }});
+                                                      onSelect: this.onSelectArrival});
         this.initQuickselect();
     },
+    onSelectDeparture: function(dateText, inst){
+        this.departureDateFromDatepicker =  dateText;
+        console.log("hej");
+        this.test();
+    },
+    onSelectArrival: function(dateText, inst) {
+        this.arrivalDateFromDatepicker = dateText;
+        this.test();
+    },
+    test: function(){
+        console.log(this.departureDateFromDatepicker, this.arrivalDateFromDatepicker);
+    },
+
     events: {
         'click #search-trip': 'searchTrip',
         'click #trip-type' : 'hideArrivalDate'
