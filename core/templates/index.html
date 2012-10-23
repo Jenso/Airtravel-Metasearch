@@ -221,11 +221,22 @@ TORNADO_API_URL = "{% tornado_api_url %}";
 
 <script type="text/template" id="tpl-trip">
   <div>
-    <div class="top">
+    <div class="top"> 
+    
+    <div class="label-utresa">
+    <span >
+		<img src="{{ STATIC_URL }}images/utresa.png"/>Utresa
+	  </span>
+	  </div>
+	  
+	  <div class="label-hemresa">
+	  <span >
+	  	<img src="{{ STATIC_URL }}images/hemresa.png"/>Hemresa
+	  </span>
+	  </div>
+	  
       <div class="arrival-time">
-      <span class="label-utresa">
-	<img src="{{ STATIC_URL }}images/utresa.png"/>Utresa
-      </span>
+     
       <div>
 		  <img style="height:40px;width:40px;" src="{{ STATIC_URL }}images/airlines/<%= airlineOutbound %>.jpg" />
 		  <span><%= outbound_departure_time %> <%= outbound['departure-where-name'] %> - <%= outbound_arrival_time %> <%= outbound['arrival-where-name'] %>
@@ -254,7 +265,7 @@ TORNADO_API_URL = "{% tornado_api_url %}";
 	</div>
       </div>
       <div class="departure-time">
-      <span class="label-hemresa"><img src="{{ STATIC_URL }}images/hemresa.png"/>Hemresa</span>
+      
       <div>
 	<img  style="height:40px;width:40px;" src="{{ STATIC_URL }}images/airlines/<%= airlineInbound %>.jpg" />
 	<span><%= inbound_departure_time %> <%= inbound['departure-where-name'] %> - <%= inbound_arrival_time %> <%= inbound['arrival-where-name'] %>
