@@ -393,18 +393,25 @@ var SearchView = Backbone.Marionette.ItemView.extend({
             "children": this.$('#number-children').val(),
             "infants":"0",
         };
+/*
 
         var dateTest = this.dateValidation(searchParams.departureDate, searchParams.returnDate);
+        
+*/
+        Travel.vent.trigger("search:start", searchParams);
+        
         console.log(dateTest);
-        if (dateTest == 0){
+       /*
+ if (dateTest == 0){
             console.log("begin search");
-            Travel.vent.trigger("search:start", searchParams);
+            
         }
         else if (dateTest == 1){
         }
         else{
             console.log("Please enter");
         };
+*/
 
     },
 
