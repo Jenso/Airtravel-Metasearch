@@ -123,11 +123,17 @@ TORNADO_API_URL = "{% tornado_api_url %}";
 	
 </script>
 
+<script type="text/template" id="tpl-no-flights-found">
+  <div class="alert alert-error">
+    Inga flyg hittade för den valda sökningen.
+  </div>
+</script>
+
 <script type="text/template" id="tpl-search-area">
 	<div id="first-page" class="general-design" >
 		
 		<div class="span">
-			<h1>Sök efter de bästa flygbiljetterna bland nätets resebyråer</h1>
+			<h1>Det enklaste sättet att hitta flygbiljetter online</h1>
 			<div class="search-boxes-destination">
 				  
 				 <div class="pull-left departure-options">

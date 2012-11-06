@@ -231,10 +231,24 @@ var TripsView = Backbone.Marionette.CompositeView.extend({
             // we dont want to trigger a rendering of the view when the collection is fetched
             silent:true,
             success: function(collection, response) {
-                Travel.vent.trigger("search:tripsloaded", _this)
+		if(collection.length > 0) {
+                    Travel.vent.trigger("search:tripsloaded", _this)
+		} else {
+		    // no flights found for the search
+		    Travel.vent.trigger("search:noflightsfound", _this)
+		}
             }
         });
     },
+    destroyView: function() {
+        //COMPLETELY UNBIND THE VIEW
+        this.undelegateEvents();
+
+        $(this.el).removeData().unbind();
+
+        Backbone.View.prototype.remove.call(this);
+    },
+ 
     initTimezoneData: function() {
         // TODO: If TripsCollection query is done before this request, we have a problem -> FIX!
         var _this = this;
@@ -256,6 +270,10 @@ var TripsView = Backbone.Marionette.CompositeView.extend({
     appendHtml: function(collectionView, itemView, index){
         collectionView.$el.find("#search-results").append(itemView.el);
     }
+});
+
+var NoFlightsFoundView = Backbone.Marionette.ItemView.extend({
+    template: "#tpl-no-flights-found"
 });
 
 var WaitingSearchView = Backbone.Marionette.ItemView.extend({
@@ -444,10 +462,10 @@ Travel.addInitializer(function(options){
         search: function() {
             var test_data =  {
                 'tripType':'ROUNDTRIP',
-                'departureIata': 'ARN',
-                'arrivalIata': 'AMS',
-                "departureDate":"2012-11-01",
-                "returnDate":"2012-11-06",
+                'departureIata': 'CPH',
+                'arrivalIata': 'NCE',
+                "departureDate":"2012-11-15",
+                "returnDate":"2012-11-20",
                 "ticketType":"ECONOMY",
                 "adults":"1",
                 "children":"0",
@@ -483,6 +501,14 @@ Travel.addInitializer(function(options){
         // searchQuery against travel agencies done, now show them
         Travel.mainRegion.show(tripsViewObj);
     });
+
+    Travel.vent.on("search:noflightsfound", function(tripsViewObj) {
+        // searchQuery against travel agencies done, now show them
+	tripsViewObj.destroyView();
+        Travel.mainRegion.show(new NoFlightsFoundView());
+	
+    });
+
 
     var app_router = new MyRouter();
     Backbone.history.start();
