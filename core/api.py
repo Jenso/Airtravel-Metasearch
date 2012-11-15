@@ -30,6 +30,7 @@ from django.db.models import Q
 from tastypie.resources import ALL
 
 class AirportResource(ModelResource):
+
     def build_filters(self, filters=None):
         if filters is None:
             filters = {}

@@ -1,6 +1,12 @@
 import elementtree.ElementTree as ET
 from tornad.database import *
 import tornado, re
+from core.models import Airports
+
+from datetime import *
+from dateutil.tz import *
+from dateutil.relativedelta import *
+from dateutil.parser import parse
 
 def create_url(url, get_parameters):
     url += "?"
@@ -37,6 +43,7 @@ def parse_xml(data, travel_agency):
         outbound['stops'] = child.find("outbound/stops").text
         outbound['airlines'] = child.find("outbound/airlines").text
         outbound['flightnumbers'] = child.find("outbound/flightnumbers").text
+        outbound['travel-time'] = calculate_trip_time(outbound['departure-when'], outbound['departure-where-code'], outbound['arrival-when'], outbound['arrival-where-code'])
 
         trips_ele = child.find("outbound/trips")
         outbound['trips'] = []
@@ -52,6 +59,7 @@ def parse_xml(data, travel_agency):
             trip_dict['arrival-when'] = trip.find("arrival-when").text
             trip_dict['arrival-where-name'] = trip.find("arrival-where-name").text
             trip_dict['arrival-where-code'] = trip.find("arrival-where-code").text
+            trip_dict['travel-time'] = calculate_trip_time(trip_dict['departure-when'], trip_dict['departure-where-code'], trip_dict['arrival-when'], trip_dict['arrival-where-code'])
         
             trips.append(trip_dict)
 
@@ -68,6 +76,7 @@ def parse_xml(data, travel_agency):
         inbound['stops'] = child.find("inbound/stops").text
         inbound['airlines'] = child.find("inbound/airlines").text
         inbound['flightnumbers'] = child.find("inbound/flightnumbers").text
+        inbound['travel-time'] = calculate_trip_time(inbound['departure-when'], inbound['departure-where-code'], inbound['arrival-when'], inbound['arrival-where-code'])
     
         trips_ele = child.find("inbound/trips")
         inbound['trips'] = []
@@ -83,6 +92,7 @@ def parse_xml(data, travel_agency):
             trip_dict['arrival-when'] = trip.find("arrival-when").text
             trip_dict['arrival-where-name'] = trip.find("arrival-where-name").text
             trip_dict['arrival-where-code'] = trip.find("arrival-where-code").text
+            trip_dict['travel-time'] = calculate_trip_time(trip_dict['departure-when'], trip_dict['departure-where-code'], trip_dict['arrival-when'], trip_dict['arrival-where-code'])
         
             trips.append(trip_dict)
     
@@ -135,4 +145,23 @@ def validate_get_params(parameters):
         validated_parameters[param_name] = parameters(param_name)
 
     return validated_parameters
-         
+
+
+def calculate_trip_time(departure_time, departure_code, arrival_time, arrival_code):
+	"""
+	Calculates the trip-time between 2 destinations
+	"""
+	
+	departure_airport = Airports.objects.get(iata=departure_code)
+	arrival_airport = Airports.objects.get(iata=arrival_code)
+	
+	ETD = parse(departure_time + departure_airport.timezone)
+	ETA = parse(arrival_time + arrival_airport.timezone)
+	
+	time_diff = relativedelta(ETA, ETD)
+	
+	time_diff.hours = time_diff.hours + time_diff.days * 24
+	
+	travel_time = str(time_diff.hours)+"h "+str(time_diff.minutes)+"min"
+	
+	return travel_time;

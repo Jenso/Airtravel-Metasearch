@@ -147,7 +147,6 @@ var TripView = Backbone.Marionette.ItemView.extend({
         this.model.set({
             'airlineInbound' : this.currentAirplane('inbound'),
         }, {silent:true});
-        this.setTripTime();
 
     },
     events: {
@@ -167,42 +166,6 @@ var TripView = Backbone.Marionette.ItemView.extend({
         else{
             return "randomairplane";
         };
-    },
-    parseDate: function(date, timezone) {
-        // parse date and convert from specified timezone to local timezone
-        var parts = date.match(/(\d+)/g);
-        var parsed_date = new Date(Date.parse(parts[0] + " " + parts[1] + " " + parts[2] + " " + parts[3] + ":" + parts[4] + " GMT" + timezone));
-        console.log("wuut", parsed_date, parts, timezone);
-        return parsed_date;
-
-    },
-    formatHoursMinutes: function(minutes) {
-        // Minutes => hours and minutes
-        if(minutes > 60) {
-            return {hours: Math.floor(minutes / 60), minutes: minutes % 60}
-        } else {
-            return {hours: null, minutes: minutes}
-        }
-    },
-    calculateTripTime: function(start, end) {
-        start = this.parseDate(start, this.options.departureTimezone)
-        end = this.parseDate(end, this.options.arrivalTimezone)
-        var milliseconds_between = end.getTime() - start.getTime();
-        var minutes_between = (milliseconds_between / 1000) / 60;
-        return this.formatHoursMinutes(minutes_between);
-    },
-    setTripTime: function() {
-        var outbound = this.model.get("outbound");
-        var outbound_departure = outbound['departure-when'];
-        var outbound_arrival = outbound['arrival-when'];
-
-        var inbound = this.model.get("inbound");
-        var inbound_departure = inbound['departure-when'];
-        var inbound_arrival = inbound['arrival-when'];
-        this.model.set({
-            outboundTripTime: this.calculateTripTime(outbound_departure, outbound_arrival),
-            inboundTripTime: this.calculateTripTime(inbound_departure, inbound_arrival)
-        }, {silent: true});
     },
 });
 

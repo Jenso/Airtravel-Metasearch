@@ -9,8 +9,8 @@
 </style>
 <!-- Underscore.js Templates -->
 <script>
-AIRPORTS_API_URL = "{% url 'api_dispatch_list' api_name="general" resource_name="airports" %}";
-TORNADO_API_URL = "{% tornado_api_url %}";
+var AIRPORTS_API_URL = "{% url 'api_dispatch_list' api_name="general" resource_name="airports" %}";
+var TORNADO_API_URL = "{% tornado_api_url %}";
 </script>
 
 <script type="text/template" id="tpl-waiting-search">
@@ -248,11 +248,7 @@ TORNADO_API_URL = "{% tornado_api_url %}";
 		  <span><%= outbound_departure_time %> <%= outbound['departure-where-name'] %> - <%= outbound_arrival_time %> <%= outbound['arrival-where-name'] %>
 			  <span class="arrival-time-travel">Restid: 
 				  <span class="time">
-					  <% if(outboundTripTime.hours) { %>
-					  <%= outboundTripTime.hours %>h <%= outboundTripTime.minutes %>min
-					  <% } else { %>
-					  <%= outboundTripTime.minutes %>min
-					  <% } %>
+					 <%=  outbound['travel-time'] %>
 				  </span> 
 			
 							<% if(inbound['stops'] == "0") { %>
@@ -277,11 +273,7 @@ TORNADO_API_URL = "{% tornado_api_url %}";
 	<span><%= inbound_departure_time %> <%= inbound['departure-where-name'] %> - <%= inbound_arrival_time %> <%= inbound['arrival-where-name'] %>
 	  <span class="departure-time-travel">Restid: 
 	    <span class="time">
-	      <% if(inboundTripTime.hours) { %>
-	      <%= inboundTripTime.hours %>h <%= inboundTripTime.minutes %>min
-	      <% } else { %>
-	      <%= inboundTripTime.minutes %>min
-	      <% } %>      
+	      <%= inbound['travel-time'] %> 
 	    </span> 
 	    <% if(inbound['stops'] == "0") { %>
 	    <span style="color:green;display:inline;">(Direktflyg)</span>
