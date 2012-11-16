@@ -296,15 +296,13 @@ var SearchView = Backbone.Marionette.ItemView.extend({
     },
     onSelectDeparture: function(dateText, inst){
         this.departureDateFromDatepicker =  dateText;
-        console.log("hej");
-        this.test();
     },
     onSelectArrival: function(dateText, inst) {
         this.arrivalDateFromDatepicker = dateText;
-        this.test();
-    },
-    test: function(){
-        console.log(this.departureDateFromDatepicker, this.arrivalDateFromDatepicker);
+        
+        departureDate = new Date(this.departureDateFromDatepicker);
+        arrivalDate = new Date(this.arrivalDateFromDatepicker);
+        this.dateValidation(departureDate, arrivalDate);
     },
 
     events: {
@@ -325,19 +323,17 @@ var SearchView = Backbone.Marionette.ItemView.extend({
     },
 
     testNaN: function(parsedDate1, parsedDate2){
-
-        var date1 = isNaN(parsedDate1);
-        var date2 = isNaN(parsedDate2);
-
-        if (isNaN(parsedDate1) && isNaN(parsedDate2)){
+	    /* 	 Tests if the user has selected dates for his trip. Returns a number so the function which calls on testNaN can know what kind date is missing  */
+	    
+        if (parsedDate1 == undefined && parsedDate2 == undefined){
             alert("Var god och välj datum för din resa.")
             return 2;
         }
-        else if (isNaN(parsedDate1)){
+        else if (parsedDate1 == undefined){
             alert("Var god och välj datum för din utresa.")
             return 3;
         }
-        else if (isNaN(parsedDate2)){
+        else if (parsedDate2 == undefined){
             if(this.$('#trip-type').attr('checked')){
                 return 0;
             }
@@ -352,17 +348,15 @@ var SearchView = Backbone.Marionette.ItemView.extend({
     },
 
     dateValidation: function(date1, date2){
-        var d1 = Date.parse(date1);
-        var d2 = Date.parse(date2);
-        if (d2 >= d1){
+        if (date2 >= date1){
             return 0;
         }
-        else if (d2 < d1){
+        else if (date2 < date1){
             alert("Ditt datum för utresa ligger efter ditt datum för hemresa, var god försök igen :) ");
             return 1;
         }
         else{
-            return this.testNaN(d1, d2);
+            return this.testNaN(date1, date2);
         }
     },
 
@@ -383,25 +377,18 @@ var SearchView = Backbone.Marionette.ItemView.extend({
             "children": this.$('#number-children').val(),
             "infants":"0",
         };
-/*
 
+
+        /*    Tests if the returnDate is before departureDate. If not the Search-process do not start     */
         var dateTest = this.dateValidation(searchParams.departureDate, searchParams.returnDate);
         
-*/
-        Travel.vent.trigger("search:start", searchParams);
-        
-        //console.log(dateTest);
-       /*
- if (dateTest == 0){
-            console.log("begin search");
-            
+        if (dateTest == 0){
+            Travel.vent.trigger("search:start", searchParams);
         }
         else if (dateTest == 1){
         }
         else{
-            console.log("Please enter");
         };
-*/
 
     },
 
