@@ -329,11 +329,11 @@ var SearchView = Backbone.Marionette.ItemView.extend({
 	    /* 	 Tests if the user has selected dates for his trip. Returns a number so the function which calls on testNaN can know what kind date is missing  */
 	    
         if (parsedDate1 == undefined && parsedDate2 == undefined){
-            alert("Var god och välj datum för din resa.")
+            alert("Error: Var god och välj datum för din resa.")
             return 2;
         }
         else if (parsedDate1 == undefined){
-            alert("Var god och välj datum för din utresa.")
+            alert("Error: Var god och välj datum för din utresa.")
             return 3;
         }
         else if (parsedDate2 == undefined){
@@ -341,7 +341,7 @@ var SearchView = Backbone.Marionette.ItemView.extend({
                 return 0;
             }
             else{
-                alert("Var god och välj datum för din hemresa.")
+                alert("Error: Var god och välj datum för din hemresa.")
                 return 4;
             }
         }
@@ -355,12 +355,50 @@ var SearchView = Backbone.Marionette.ItemView.extend({
             return 0;
         }
         else if (date2 < date1){
-            alert("Ditt datum för utresa ligger efter ditt datum för hemresa, var god försök igen :) ");
+            alert("Error: Ditt datum för utresa ligger efter ditt datum för hemresa, var god försök igen :) ");
             return 1;
         }
         else{
             return this.testNaN(date1, date2);
         }
+    },
+    
+    inputValidation : function(inputtx, theWord){
+        if (inputtx.val().length == 0){   
+        	alert("Error: Du har visst glömt att fylla i vart du vill åka "+theWord+", var god försök igen :)")    
+        	return false;   
+        }       
+        return true;   
+    },
+    
+    validationTests : function(params){
+	    /*  This function tests the users input */
+	        
+	    var testResponse = {
+		/* 	This is to be able to return multiple values*/
+		    'searchParams' : params,
+		    'testOk' : false,
+		};
+		    
+		/*  Tests the users inputs     */
+		var dateTest = this.dateValidation(testResponse.searchParams.departureDate, testResponse.searchParams.returnDate);
+		var inputTestFrom = this.inputValidation(this.$('input#from'), "från");
+		var inputTestTo = this.inputValidation(this.$('input#to'), "till");
+	        
+	        
+		if (inputTestFrom && inputTestTo){
+		/* 	If the input-forms contains a value it sets searchParams.departureIata to the inputs value */
+			testResponse.searchParams.departureIata = this.extractIata(this.$('input#from').val());
+			testResponse.searchParams.arrivalIata = this.extractIata(this.$('input#to').val());
+		};
+	        
+	       
+		if (dateTest == 0 && inputTestFrom && inputTestTo){
+		/* If all the tests is OK, then it sets testResponse.testOk = True */
+			testResponse.testOk = true;
+		};
+		    
+		return testResponse;	    
     },
 
     searchTrip: function() {
@@ -371,8 +409,8 @@ var SearchView = Backbone.Marionette.ItemView.extend({
         }
         var searchParams = {
             'tripType': tripType,
-            'departureIata': this.extractIata(this.$('input#from').val()),
-            'arrivalIata': this.extractIata(this.$('input#to').val()),
+            'departureIata': "",
+            'arrivalIata': "",
             "departureDate": this.departureDateFromDatepicker,
             "returnDate": this.arrivalDateFromDatepicker,
             "ticketType":"ECONOMY",
@@ -380,17 +418,13 @@ var SearchView = Backbone.Marionette.ItemView.extend({
             "children": this.$('#number-children').val(),
             "infants":"0",
         };
-
-
-        /*    Tests if the returnDate is before departureDate. If not the Search-process do not start     */
-        var dateTest = this.dateValidation(searchParams.departureDate, searchParams.returnDate);
         
-        if (dateTest == 0){
-            Travel.vent.trigger("search:start", searchParams);
-        }
-        else if (dateTest == 1){
-        }
-        else{
+        var testResponse = this.validationTests(searchParams);
+        
+        searchParams = testResponse.searchParams;
+        
+        if (testResponse.testOk == true){
+	        Travel.vent.trigger("search:start", searchParams);
         };
 
     },
