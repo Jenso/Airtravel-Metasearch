@@ -293,9 +293,12 @@ var SearchView = Backbone.Marionette.ItemView.extend({
         this.$("#datepicker-return-date").datepicker({firstDay: 1,
                                                       onSelect: this.onSelectArrival});
         this.initQuickselect();
+        
     },
     onSelectDeparture: function(dateText, inst){
         this.departureDateFromDatepicker =  dateText;
+        var chosenDate = new Date(dateText)
+        this.$("#datepicker-return-date").datepicker('option', 'minDate', chosenDate);
     },
     onSelectArrival: function(dateText, inst) {
         this.arrivalDateFromDatepicker = dateText;
