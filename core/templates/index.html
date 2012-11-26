@@ -148,25 +148,31 @@ var TORNADO_API_URL = "{% tornado_api_url %}";
 				</label>
 			<div class="search-boxes-destination">
 				  
-				 <div class="pull-left departure-options">
-						<label>Avreseort:</label>
-						<input id="from" type="text" >
-		
-						<label>Avresedatum:</label>
-
-					  	<div class="datepicker" id="datepicker-departure-date" >
-						</div>
+				 <div class="search-inputs">
+					 <div class="pull-left departure-options">
+							<label>Avreseort:</label>
+							<input id="from" type="text" >
+					</div>
+					  
+					<div class="pull-right arrival-options">
+					  	 <label>Destination:</label>
+					  	 <input id="to" type="text" >
+					</div>
+				</div>		
+				<div class="date-picker-inputs">		
+					<div class="pull-left departure-options">		
+							<label>Avresedatum:</label>
+						  	<div class="datepicker" id="datepicker-departure-date" >
+							</div>
+					</div>
+					  
+					<div class="pull-right arrival-options">
+					  	 <label id="label-to-return-date">Hemresedatum:</label>
+					  	 <div class="datepicker" id="datepicker-return-date" style="display: block">
+	
+					     </div>
+					</div>
 				</div>
-				  
-				<div class="pull-right arrival-options">
-				  	 <label>Destination:</label>
-				  	 <input id="to" type="text" >
-				  	 <label id="label-to-return-date">Hemresedatum:</label>
-				  	 <div class="datepicker" id="datepicker-return-date" style="display: block">
-
-				     </div>
-				</div>
-				  
 			</div>
 			
 
