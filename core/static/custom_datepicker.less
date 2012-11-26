@@ -87,24 +87,25 @@ ui-state-hover{
 }
 
 .ui-datepicker{
-	width:290px;
+	width:100%;
 	padding-left:0px;
 }
 
 .ui-datepicker .ui-datepicker-title{
 		select{
-			font-size:13px;
+			font-size:10px;
 			font-weight:100;
 			color:#222;
 		}
 		select.ui-datepicker-month{
-			width:120px;
+			width:80px;
 			margin-right:20px;
 			
 		}
 		select.ui-datepicker-year{
 			width:70px;
 		}
+		font-size:10px;
 }
 
 .ui-datepicker table {
@@ -113,4 +114,28 @@ ui-state-hover{
 
 .ui-datepicker .ui-datepicker-next span, .ui-datepicker .ui-datepicker-prev span {	
 	margin-top: -5.5px;
+}
+
+.ui-datepicker-header{
+	width:108%;
+}
+
+.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next, .ui-datepicker .ui-datepicker-prev{
+  position: absolute;
+  top: 1px;
+}
+
+.ui-datepicker .ui-datepicker-next span, .ui-datepicker .ui-datepicker-prev span {
+	margin-top: -7.0px;
+}
+
+
+.ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next { 
+	position:absolute;
+	width: 20px; 
+	height: 20px; 
+	}
+
+.ui-datepicker .ui-state-hover .ui-datepicker-next-hover{
+	background-color:Red;
 }

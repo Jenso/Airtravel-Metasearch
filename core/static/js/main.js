@@ -27,18 +27,18 @@ var Trip = Backbone.Model.extend({
 
 var TripsCollection = Backbone.Collection.extend({
     url: TORNADO_API_URL,
-    model: Trip,
+    model: Trip
 });
 
 var AirportsCollection = Backbone.Tastypie.Collection.extend({
-    url: AIRPORTS_API_URL,
+    url: AIRPORTS_API_URL
 });
 
 var AirportView = Backbone.Marionette.ItemView.extend({
 });
 
 var AirportSearchView = Backbone.Marionette.CompositeView.extend({
-    itemView: AirportView,
+    itemView: AirportView
 });
 
 var OverlayView = Backbone.View.extend({
@@ -56,11 +56,11 @@ var OverlayView = Backbone.View.extend({
             'dayOfOutboundDeparture' : dayOfOutboundDeparture,
             'dayOfOutboundArrival' : dayOfOutboundArrival,
             'dayOfInboundDeparture' : dayOfInboundDeparture,
-            'dayOfInboundArrival' : dayOfInboundArrival,
+            'dayOfInboundArrival' : dayOfInboundArrival
         });
     },
     events: {
-        'click #close-modal': 'closeTripOverlay',
+        'click #close-modal': 'closeTripOverlay'
     },
     weekday: [
         "Söndag",
@@ -69,7 +69,7 @@ var OverlayView = Backbone.View.extend({
         "Onsdag",
         "Torsdag",
         "Fredag",
-        "Lördag",
+        "Lördag"
     ],
 
     dayOfTravel: function(when, what){
@@ -94,7 +94,7 @@ var OverlayView = Backbone.View.extend({
     },
     closeTripOverlay: function(){
         $('#overlay-modal').modal('hide');
-    },
+    }
 });
 
 var TripView = Backbone.Marionette.ItemView.extend({
@@ -136,25 +136,24 @@ var TripView = Backbone.Marionette.ItemView.extend({
         'Qantas' : 'qantas',
         'Norwegian' : 'norwegian',
         'Singapore Airlines' :  'singaporeairlines',
-        'TUIfly' : 'tuifly',
+        'TUIfly' : 'tuifly'
     },
 
     initialize: function(){
 
         this.model.set({
-            'airlineOutbound' : this.currentAirplane('outbound'),
+            'airlineOutbound' : this.currentAirplane('outbound')
         }, {silent:true});
         this.model.set({
-            'airlineInbound' : this.currentAirplane('inbound'),
+            'airlineInbound' : this.currentAirplane('inbound')
         }, {silent:true});
 
     },
     events: {
-        'click .flight-info-trigger': 'tripOverlay',
+        'click .flight-info-trigger': 'tripOverlay'
     },
     tripOverlay: function() {
         this.currentOverlay = new OverlayView({model: this.model, el: this.$('.modal-container')}).render();
-        console.log("kasdk");
     },
     currentAirplane: function(airplane){
         str = this.model.get(airplane).airlines;
@@ -166,7 +165,7 @@ var TripView = Backbone.Marionette.ItemView.extend({
         else{
             return "randomairplane";
         };
-    },
+    }
 });
 
 var TripsView = Backbone.Marionette.CompositeView.extend({
@@ -224,7 +223,6 @@ var TripsView = Backbone.Marionette.CompositeView.extend({
 
                 _this.departureTimezone = objects[0].timezone;
                 _this.arrivalTimezone = objects[1].timezone;
-                console.log(_this.departureTimezone, objects[1].timezone, response);
 
             }
         });
@@ -280,8 +278,8 @@ var SearchView = Backbone.Marionette.ItemView.extend({
             isRTL: false,
             showMonthAfterYear: false,
             minDate: 0,
-            changeMonth:true,
-            changeYear: true,
+            changeMonth:false,
+            changeYear: false,
             showOtherMonths:true,
             selectOtherMonths:true,
             showWeek:true,
@@ -310,7 +308,8 @@ var SearchView = Backbone.Marionette.ItemView.extend({
 
     events: {
         'click #search-trip': 'searchTrip',
-        'click #trip-type' : 'hideArrivalDate'
+        'click #trip-type' : 'hideArrivalDate',
+        'click #trip-type-tr' : 'hideArrivalDate'
     },
     initQuickselect: function() {
         // tell where QuickSelect should get the Airport data
@@ -377,7 +376,7 @@ var SearchView = Backbone.Marionette.ItemView.extend({
 	    var testResponse = {
 		/* 	This is to be able to return multiple values*/
 		    'searchParams' : params,
-		    'testOk' : false,
+		    'testOk' : false
 		};
 		    
 		/*  Tests the users inputs     */
@@ -416,7 +415,7 @@ var SearchView = Backbone.Marionette.ItemView.extend({
             "ticketType":"ECONOMY",
             "adults": this.$('#number-adults').val(),
             "children": this.$('#number-children').val(),
-            "infants":"0",
+            "infants":"0"
         };
         
         var testResponse = this.validationTests(searchParams);
@@ -430,9 +429,15 @@ var SearchView = Backbone.Marionette.ItemView.extend({
     },
 
     hideArrivalDate: function(){
-        this.$('#label-to-return-date').toggle();
-        this.$('#datepicker-return-date').toggle();
-    },
+        if(this.$('#trip-type-tr').attr('checked')){
+        	this.$('#label-to-return-date').show();
+        	this.$('#datepicker-return-date').show();
+        }
+        else if(this.$('#trip-type').attr('checked')){
+        	this.$('#label-to-return-date').hide();
+        	this.$('#datepicker-return-date').hide();
+        }
+    }
 
 });
 
@@ -444,7 +449,7 @@ Travel.addInitializer(function(options){
     MyRouter = Backbone.Marionette.AppRouter.extend({
         routes : {
             "test-search" : "search",
-            "*actions": "defaultRoute",
+            "*actions": "defaultRoute"
         },
         search: function() {
             var test_data =  {
@@ -456,7 +461,7 @@ Travel.addInitializer(function(options){
                 "ticketType":"ECONOMY",
                 "adults":"1",
                 "children":"0",
-                "infants":"0",
+                "infants":"0"
             };
 
             Travel.vent.trigger("search:start", test_data);
@@ -471,7 +476,7 @@ Travel.addInitializer(function(options){
 
             Travel.mainRegion.show(SearchView1);
 
-        },
+        }
     });
 
     Travel.vent.on("search:start", function(searchTerm){

@@ -13,9 +13,11 @@
 
 
 	box-shadow: #7E7E7E 0px 6px 6px 0px;
-	
+	background-color:white;
 	padding-top:10px;
-	.border-radius(5px);
+	.border-radius(10px);
+	width: 380px;
+	padding:20px;
 }
 
 #first-page{
@@ -25,9 +27,16 @@
 	h1{
 		font-size:20px;
 	}
+
+	.checkbox{
+		margin-bottom:15px;
+		font-size: 14px;
+		padding-left:0px;
+			
+	}
 	
 	.search-boxes-destination, .search-boxes-date{
-		width:606px;
+		width:380px;
 	}
 	
 	.search-boxes-destination{
@@ -43,7 +52,6 @@
 		}
 		
 		.arrival-options, .departure-options{
-			width:300px;
 			display:inline-block;
 			padding-right:0px;
 			label{
@@ -53,7 +61,7 @@
 			}
 			input{
 				float:left;
-				width:290px;
+				width:175px;
 				height:35px;
 				font-size:15px;
 			}
@@ -71,21 +79,21 @@
 
 	
 	.search-boxes-additional-info{
-		height:200px;
-		.checkbox{
-			margin-top:85px;
-			margin-bottom:15px;
-			font-size: 14px;
-			
-		}
+		width:370px;
+		padding-top:10px;
+		margin-left:-20px;
 		select{
 			margin-bottom:15px;
-			width:102px;
-			font-size:13px;
+			width:80px;
+			font-size:11px;
+			padding-top:10px;
+			margin-right:9px;
 		}
 		.btn{
-			margin-top:30px;
-			font-weight: 300;
+			padding-top:10px;
+			font-weight: 200;
+			display:inline-block;
+			float:right;
 		}
 		
 	}
@@ -104,6 +112,8 @@ input{
 
 	.btn{
 		display:block;
+		background-image: -webkit-linear-gradient(top, #e75640, #e75640);
+		background-color:#e75640;
 	}
 	
 	.checkbox{
@@ -164,4 +174,12 @@ input{
 
 .quickselect_results{
 	margin-top:-33px;
+}
+
+.ui-datepicker{
+	width:167px;
+}
+
+.ui-datepicker .ui-datepicker-title select {
+	font-size: 10px;
 }
