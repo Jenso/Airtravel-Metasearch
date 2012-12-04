@@ -132,94 +132,94 @@ var TORNADO_API_URL = "{% tornado_api_url %}";
 <script type="text/template" id="tpl-search-area">
 	<div id="first-page" class="" >
 		
-		<div class="span6 search-block general-design">
-			<h1>Det enklaste sättet att hitta</h1>
-			<!--
-<form action="">
-			<input type="radio" name="sex" value="male">Male<br>
-			<input type="radio" name="sex" value="female">Female
-			</form>
--->
+		<div class="span7 search-block">
+			<div class="search-block-inner-checkbox">
 				<label class="checkbox">
-					<form action="">
-					<input type="radio" name="typeOfTrip" id="trip-type-tr" value="" checked>Tur & Retur
-					<input type="radio" name="typeOfTrip" id="trip-type" value=""> Enkelresa
-				  		</form>
-				</label>
-			<div class="search-boxes-destination">
-				  
-				 <div class="search-inputs">
-					 <div class="pull-left departure-options">
-							<label>Avreseort:</label>
-							<input id="from" type="text" >
-					</div>
-					  
-					<div class="pull-right arrival-options">
-					  	 <label>Destination:</label>
-					  	 <input id="to" type="text" >
-					</div>
-				</div>		
-				<div class="date-picker-inputs">		
-					<div class="pull-left departure-options">		
-							<label>Avresedatum:</label>
-						  	<div class="datepicker" id="datepicker-departure-date" >
-							</div>
-					</div>
-					  
-					<div class="pull-right arrival-options">
-					  	 <label id="label-to-return-date">Hemresedatum:</label>
-					  	 <div class="datepicker" id="datepicker-return-date" style="display: block">
-	
-					     </div>
-					</div>
-				</div>
+				<form action="">
+						<input type="radio" name="typeOfTrip" id="trip-type-tr" value="" checked>Tur & Retur
+						<input type="radio" name="typeOfTrip" id="trip-type" value=""> Enkelresa
+				</form>		
 			</div>
-			
-
-			  
-	
-			 
-			 <div class="span"><div class="search-boxes-additional-info">	
-			 
-
-			 
-				<select id="number-adults">
-				  <option value="0">0 Vuxen</option>
-				  <option selected="selected" value="1">1 Vuxen</option>
-				  <option value="2">2 Vuxna</option>
-				  <option value="3">3 Vuxna</option>
-				  <option value="4">4 Vuxna</option>
-				  <option value="5">5 Vuxna</option>
-				  <option value="6">6 Vuxna</option>
-				  <option value="7">7 Vuxna</option>
-				  <option value="8">8 Vuxna</option>
-				  <option value="9">9 Vuxna</option>
-				</select>
+			<div class="search-block-inner-checkbox-right">
 				
-				<select id="number-children">
-				  <option value="0">0 Barn</option>
-				  <option value="1">1 Barn</option>
-				  <option value="2">2 Barn</option>
-				  <option value="3">3 Barn</option>
-				  <option value="4">4 Barn</option>
-				  <option value="5">5 Barn</option>
-				  <option value="6">6 Barn</option>
-				  <option value="7">7 Barn</option>
-				  <option value="8">8 Barn</option>
-				  <option value="9">9 Barn</option>
-				</select>		
-			 
-			 <button class="btn btn-large btn-primary" id="search-trip" type="button"><i class="icon-white icon-search"></i> Sök Flygbiljetter</button>
-			 
-			 </div>
-		</div>   
-	</div>
-	<div class="span6" style="">
-		<img src="{{ STATIC_URL }}images/moln1.png"/>
-	</div>
+			</div>
+			<div class="search-block-inner">
 
-</div>
+				</label>
+				<div class="search-boxes-destination">
+					  
+					 <div class="search-inputs">
+						 <div class="departure-options">
+								<label>Avreseort:</label>
+								<input id="from" type="text" >
+						</div>
+						  
+						<div class="arrival-options">
+						  	 <label>Destination:</label>
+						  	 <input id="to" type="text" >
+						</div>
+					</div>	
+						
+					<div class="date-picker-inputs">		
+						<div class="departure-options">		
+								<label>Avresedatum:</label>
+							  	<div class="datepicker" id="datepicker-departure-date" >
+								</div>
+						</div>
+						  
+						<div class="arrival-options">
+						  	 <label id="label-to-return-date">Hemresedatum:</label>
+						  	 <div class="datepicker" id="datepicker-return-date" style="display: block">
+						     </div>
+					    </div>
+					</div>
+				
+				</div>
+	
+				<div class="search-boxes-additional-info">	
+					 
+		
+					 
+						<select id="number-adults">
+						  <option value="0">0 Vuxen</option>
+						  <option selected="selected" value="1">1 Vuxen</option>
+						  <option value="2">2 Vuxna</option>
+						  <option value="3">3 Vuxna</option>
+						  <option value="4">4 Vuxna</option>
+						  <option value="5">5 Vuxna</option>
+						  <option value="6">6 Vuxna</option>
+						  <option value="7">7 Vuxna</option>
+						  <option value="8">8 Vuxna</option>
+						  <option value="9">9 Vuxna</option>
+						</select>
+						
+						<select id="number-children">
+						  <option value="0">0 Barn</option>
+						  <option value="1">1 Barn</option>
+						  <option value="2">2 Barn</option>
+						  <option value="3">3 Barn</option>
+						  <option value="4">4 Barn</option>
+						  <option value="5">5 Barn</option>
+						  <option value="6">6 Barn</option>
+						  <option value="7">7 Barn</option>
+						  <option value="8">8 Barn</option>
+						  <option value="9">9 Barn</option>
+						</select>		
+					 
+					<button class="btn btn-large btn-primary" id="search-trip" type="button"><i class="icon-white icon-search"></i> Sök Flygbiljetter</button>
+					  
+				</div> 
+			</div>		
+		</div>
+		
+		<div class="span5" id="the-prince">
+			<img src="{{ STATIC_URL }}images/prinsen-450px.png"/>
+		</div>
+
+	</div>
 </script>
+
+
 
 
 <script type="text/template" id="tpl-trips">
