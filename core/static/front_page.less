@@ -16,31 +16,62 @@
 
 //First page
 #first-page{
+
+	.top-menu{
+		h1{
+			font-size:26px;
+			color:white;
+			margin-left:10px;
+			margin-top:0px;
+			margin-bottom:0px;
+			font-weight: 500;
+		}
+	}
 	
 	.search-block{
 	}
 	
 	.search-block-inner-checkbox{
 		background-color:@front-page-block-color;
-		xmargin:8px;
-		margin-bottom:0px;
 		padding:5px;
 		width:265px;
 		border:@front-page-border-thickness solid @front-page-border-color;
 		border-bottom: 0px solid @front-page-border-color;
-		display:inline-block;
 		margin-right:0px;
+		padding-top:8px;
+		margin-bottom:-3px;
+		span{
+			font-weight: bold;
+			margin-left:3px;
+			img{
+				width:16px;
+				
+			}
+			.btn-group{
+				display:inline;
+				.btn.active, .btn:active{
+					background-color:rgb(235, 230, 175);
+				}
+			}
+			button{
+				font-size:12px;
+				font-weight: 600;
+			}
+		}
+		
 	}
-	
+	.search-block-inner-checkbox, .search-block-inner-checkbox-right{
+		display:inline-block;
+		float:left;
+		
+	}
 	.search-block-inner-checkbox-right{
 		border-bottom: @front-page-border-thickness solid @front-page-border-color;
-		margin-bottom:0px;
-		margin-top:8px;
-		margin-left:-8px;
-		width:285px;
-		height:40px;
-		display:inline-block;
-		margin-bottom:-30px;
+		margin-left:-5px;
+		width:276px;
+		height:43px;
+		margin-bottom:-1px;
+		
 	}
 	
 	.search-block-inner{
@@ -50,13 +81,7 @@
 		padding:10px;
 		border:@front-page-border-thickness solid @front-page-border-color;
 		border-top:0px solid @front-page-border-color;
-	}
-
-	.checkbox{
-		margin-bottom:15px;
-		font-size: 14px;
-		padding-left:0px;
-			
+		float:left;
 	}
 	
 	.search-boxes-destination{
@@ -67,6 +92,7 @@
 			}
 			.arrival-options{
 				margin-left:15px;
+				margin-right: 3px;
 				
 			}
 		}
@@ -81,6 +107,7 @@
 		.arrival-options, .departure-options{
 			display:inline-block;
 			padding-right:0px;
+			float:left;
 			
 			label{
 				font-size:12px;
@@ -107,18 +134,24 @@
 		width:500px;
 		padding-top:10px;
 		display:block;
+		float:left;
+		padding-left:20px;
+		#number-adults{
+		}
 		select{
 			margin-bottom:15px;
 			width:80px;
 			font-size:11px;
 			padding-top:10px;
 			margin-right:9px;
+			display: inline-block;
 		}
 		.btn{
 			padding-top:10px;
 			font-weight: 200;
 			display:inline-block;
 			float:right;
+			
 		}
 		
 	}
@@ -127,57 +160,31 @@
 		font-size: 14px;
 	}
 	
-	/*
-input{
-			padding:20px 10px 20px 10px;
-			font-size:18px;
-			width:201px;
-		}
-*/
 
-	.btn{
+	#search-trip {
 		display:block;
 		background-image: -webkit-linear-gradient(top, #e75640, #e75640);
 		background-color:#e75640;
 	}
-	
-	.checkbox{
-			input{
-				width:0px;
-			}
-	}
-	
-	.front-page-about-us{
-		h3{
-			font-size:16px;	
-			margin-bottom:5px;
-			color:#D5C08B;
-		}
 		
-		
-		width:245px;
-		padding:10px;
-		margin-top:10px;
-		xbackground-color:green;
-		.border-radius(5px);
-	}
-	
-	.wrong-input{
-		border-color:red;
-		    box-shadow: 0 0 5px rgba(0, 0, 255, 1);
-		    -webkit-box-shadow: 0 0 5px rgba(0, 0, 255, 1); 
-		    -moz-box-shadow: 0 0 5px rgba(0, 0, 255, 1); 
-	}
-	
 	input{
 		padding-right:0px;
 	}
 	
 	#the-prince{
 		img{
-			margin-left:50px;
 		}
 		
+	}
+	
+	.footer{
+		padding:20px;
+		padding-top:50px;
+		xbackground-color:red;
+		a{
+			color:white;
+			margin-left:10px;
+		}
 	}
 	
 }

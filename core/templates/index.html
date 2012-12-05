@@ -2,6 +2,12 @@
 {% load url from future %}
 {% load tags %}
 {% block content %}
+
+<script>
+	$('.btn-group').button();
+</script>
+
+
 <style>
   .datepicker {
   display:inline-block;
@@ -131,21 +137,29 @@ var TORNADO_API_URL = "{% tornado_api_url %}";
 
 <script type="text/template" id="tpl-search-area">
 	<div id="first-page" class="" >
+	
 		
-		<div class="span7 search-block">
+  <div class="span12 top-menu">
+	  <a href="/"><img src="{{ STATIC_URL }}images/logo3.png" /> </a>
+	  <h1>Den enkla vägen till billiga flygbiljetter</h1>
+  </div>
+		
+		<div class="span8"><div class="span7 search-block">
 			<div class="search-block-inner-checkbox">
-				<label class="checkbox">
-				<form action="">
-						<input type="radio" name="typeOfTrip" id="trip-type-tr" value="" checked>Tur & Retur
-						<input type="radio" name="typeOfTrip" id="trip-type" value=""> Enkelresa
-				</form>		
+				<span>
+					<img src="{{ STATIC_URL }}images/airplane_icon.gif"/>
+					FLYG
+					<div class="btn-group" data-toggle="buttons-radio">
+					  <button type="button" id="trip-type-tr" class="btn active">Tur & Retur</button>
+					  <button type="button" id="trip-type" class="btn">Enkelresa</button>
+					</div>
+				</span>				
 			</div>
 			<div class="search-block-inner-checkbox-right">
 				
 			</div>
 			<div class="search-block-inner">
 
-				</label>
 				<div class="search-boxes-destination">
 					  
 					 <div class="search-inputs">
@@ -177,10 +191,7 @@ var TORNADO_API_URL = "{% tornado_api_url %}";
 				</div>
 	
 				<div class="search-boxes-additional-info">	
-					 
-		
-					 
-						<select id="number-adults">
+					 <select id="number-adults">
 						  <option value="0">0 Vuxen</option>
 						  <option selected="selected" value="1">1 Vuxen</option>
 						  <option value="2">2 Vuxna</option>
@@ -192,7 +203,6 @@ var TORNADO_API_URL = "{% tornado_api_url %}";
 						  <option value="8">8 Vuxna</option>
 						  <option value="9">9 Vuxna</option>
 						</select>
-						
 						<select id="number-children">
 						  <option value="0">0 Barn</option>
 						  <option value="1">1 Barn</option>
@@ -204,18 +214,29 @@ var TORNADO_API_URL = "{% tornado_api_url %}";
 						  <option value="7">7 Barn</option>
 						  <option value="8">8 Barn</option>
 						  <option value="9">9 Barn</option>
-						</select>		
+						</select>
 					 
 					<button class="btn btn-large btn-primary" id="search-trip" type="button"><i class="icon-white icon-search"></i> Sök Flygbiljetter</button>
 					  
 				</div> 
 			</div>		
-		</div>
+		</div></div>
 		
-		<div class="span5" id="the-prince">
+		<div class="span4" id="the-prince">
 			<img src="{{ STATIC_URL }}images/prinsen-450px.png"/>
 		</div>
 
+		<div class="footer span12">
+			<center>
+			<a href="#">about</a>
+			<a href="#">blog</a>
+			<a href="#">faq</a>
+			<a href="#">jobs</a>
+			<a href="#">privacy</a>
+			<a href="#">terms of service</a>
+			</center>		
+		</div>
+	
 	</div>
 </script>
 
@@ -319,11 +340,6 @@ var TORNADO_API_URL = "{% tornado_api_url %}";
 
 
 
-<div class="row">
-  <div class="span12 top-menu">
-	  <a href="/"><img src="{{ STATIC_URL }}images/logo2.png" /> </a>
-  </div>
-</div>
   <div class="row" id="content">
   </div>
 

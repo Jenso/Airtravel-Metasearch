@@ -3,11 +3,13 @@
 
 <html>
   <head>
-    <!-- TradeDoubler site verification 2180996 -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js" type="text/javascript"></script>
+    
     <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.1/underscore-min.js"></script>
     <!--  <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>-->
+    <!-- TradeDoubler site verification 2180996 -->
+
     <script src="{{ STATIC_URL }}js/backbone/backbone.js"></script>
     
     
@@ -16,17 +18,22 @@
     <script src="{{ STATIC_URL }}backbone-marionette/lib/backbone.marionette.min.js"></script>
     <script src="{{ STATIC_URL }}js/backbone-tastypie/backbone-tastypie.js"></script>
     <script src="{{ STATIC_URL }}bootstrap/js/bootstrap-modal.js"></script>
+    
     <script src="{{ STATIC_URL }}js/date-js/date.js"></script>
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js" type="text/javascript"></script>
 
+
+    <script src="{{ STATIC_URL }}bootstrap/js/bootstrap-button.js"></script>
+    
     
     <!-- quickselect -->
     <script src="{{ STATIC_URL }}quickselect/quicksilver.js" type="text/javascript"></script>
     <script src="{{ STATIC_URL }}quickselect/jquery.quickselect.js" type="text/javascript"></script>
     <link href="{{ STATIC_URL }}quickselect/jquery.quickselect.css" rel="stylesheet" type="text/css"/>
+    
+    
     
     {% bootstrap_less %}
   

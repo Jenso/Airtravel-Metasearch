@@ -336,7 +336,7 @@ var SearchView = Backbone.Marionette.ItemView.extend({
             return 3;
         }
         else if (parsedDate2 == undefined){
-            if(this.$('#trip-type').attr('checked')){
+            if(this.$('#trip-type').hasClass('active')){
                 return 0;
             }
             else{
@@ -401,7 +401,7 @@ var SearchView = Backbone.Marionette.ItemView.extend({
     },
 
     searchTrip: function() {
-        if(this.$('#trip-type').attr('checked')) {
+        if(this.$('#trip-type').hasClass('active')) {
             var tripType = 'ONEWAY';
         } else {
             var tripType = 'ROUNDTRIP';
@@ -429,13 +429,13 @@ var SearchView = Backbone.Marionette.ItemView.extend({
     },
 
     hideArrivalDate: function(){
-        if(this.$('#trip-type-tr').attr('checked')){
-        	this.$('#label-to-return-date').show();
-        	this.$('#datepicker-return-date').show();
-        }
-        else if(this.$('#trip-type').attr('checked')){
+        if(this.$('#trip-type-tr').hasClass('active')){
         	this.$('#label-to-return-date').hide();
         	this.$('#datepicker-return-date').hide();
+        }
+        else if(this.$('#trip-type').hasClass('active')){
+        	this.$('#label-to-return-date').show();
+        	this.$('#datepicker-return-date').show();
         }
     }
 
