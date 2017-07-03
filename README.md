@@ -1,4 +1,3 @@
-ProjectT
+Airtravel-Metasearch
 ========
 
-ProjectT
